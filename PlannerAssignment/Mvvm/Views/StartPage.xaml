@@ -19,7 +19,7 @@
 
             <HorizontalStackLayout >
                 <Label Text="Use Current Location " FontSize="Small" FontAttributes="Bold" VerticalOptions="Center" />
-                <Switch x:Name="locationSwitch" HorizontalOptions="Fill" />
+                <Switch x:Name="locationSwitch" IsToggled="False" Toggled="OnLocationSwitchToggled" HorizontalOptions="Fill" />
             </HorizontalStackLayout>
 
             <HorizontalStackLayout Margin="0,20,0,0">

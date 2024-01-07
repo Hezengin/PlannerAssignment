@@ -2,6 +2,7 @@
 using PlannerAssignment.Mvvm.Views;
 using PlannerAssignment.MVVM;
 using PlannerAssignment.Utils;
+using System.Diagnostics;
 
 namespace PlannerAssignment
 {
@@ -9,6 +10,7 @@ namespace PlannerAssignment
     {
         RequestManager requestManager { get; set; }
         StationViewModel stationViewModel { get; set; }
+
         public MainPage()
         {
             InitializeComponent();
@@ -17,23 +19,52 @@ namespace PlannerAssignment
 
         private void OnSearchClicked(object sender, EventArgs e)
         {
-            if (stationEditor.Text == string.Empty)
+            string stationText = stationEditor.Text?.Trim();
+            string locationText = locationEditor.Text?.Trim();
+            ClearInputs();
+
+            if (string.IsNullOrEmpty(stationText))
             {
-                Application.Current.MainPage.DisplayAlert("Error", "Station Field Is Empty!", "OK");
+                ShowAlert("Error", "Station Field Is Empty!");
+                return;
             }
-            else if (locationSwitch.IsEnabled != true)
+
+            if (string.IsNullOrEmpty(locationText))
             {
-                if (locationEditor.Text == string.Empty)
-                {
-                    Application.Current.MainPage.DisplayAlert("Error", "Location field is empty give location or enable switch to use current location!", "OK");
-                }
+                ShowAlert("Error", "Location field is empty. Provide a location or enable the switch to use the current location!");
+                return;
+            }
+
+            stationViewModel = new StationViewModel(requestManager, stationText);
+            Navigation.PushAsync(new StationPage(stationViewModel));
+        }
+
+        private void OnLocationSwitchToggled(object sender, ToggledEventArgs e)
+        {
+            if (locationSwitch.IsToggled)
+            {
+                //TODO Use Current Location
+                locationEditor.IsEnabled = false;
+                locationEditor.Text = null;
             }
             else
             {
-                stationViewModel = new StationViewModel(requestManager, stationEditor.Text);
-                Navigation.PushAsync(new StationPage());
+                locationEditor.IsEnabled = true;
             }
         }
-    }
 
+
+        private void ClearInputs()
+        {
+            stationEditor.Text = null;
+            locationEditor.Text = null;
+            locationSwitch.IsToggled = false;
+        }
+
+        private void ShowAlert(string title, string message)
+        {
+            Application.Current.MainPage.DisplayAlert(title, message, "OK");
+        }
+
+    }
 }
