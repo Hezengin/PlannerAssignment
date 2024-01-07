@@ -8,7 +8,7 @@ namespace PlannerAssignment.MVVM;
 public partial class ResultPage : ContentPage
 {
     RequestManager requestManager;
-    LightsViewModel lightViewModel;
+    TrainsListViewModel trainsViewModel;
 
     public ResultPage()
 	{
@@ -17,11 +17,11 @@ public partial class ResultPage : ContentPage
 
     public async void collectionView_SelectionChanged(object o, EventArgs e)
     {
-        if (o is Border border && border.BindingContext is TrainModel selectedLight)
+        if (o is Border border && border.BindingContext is TrainModel selectedTrain)
         {
             //Debug.WriteLine($"Selected Light: {selectedLight.Name} {selectedLight.Index}");
-            collectionView.SelectedItem = selectedLight;
-            DetailViewModel viewModel = new DetailViewModel(requestManager, selectedLight);
+            collectionView.SelectedItem = selectedTrain;
+            DetailViewModel viewModel = new DetailViewModel(requestManager, selectedTrain);
 
             await Navigation.PushAsync(new DetailPage(viewModel));
             collectionView.SelectedItem = null;

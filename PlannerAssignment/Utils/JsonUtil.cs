@@ -28,5 +28,27 @@ namespace PlannerAssignment.Utils
                 return null;
             }
         }
+
+        public static T ParseStationList<T>(string jsonString) where T : class
+        {
+            try
+            {
+                if (typeof(T).IsGenericType && typeof(T).GetGenericTypeDefinition() == typeof(List<>))
+                {
+                    var list = JsonConvert.DeserializeObject<List<T>>(jsonString);
+                    return list as T;
+                }
+                else
+                {
+                    var obj = JsonConvert.DeserializeObject<T>(jsonString);
+                    return obj;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error parsing JSON: {ex.Message}");
+                return null;
+            }
+        }
     }
 }

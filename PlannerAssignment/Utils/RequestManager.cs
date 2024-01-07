@@ -1,26 +1,27 @@
-﻿using Newtonsoft.Json;
-using PlannerAssignment.Database;
-using PlannerAssignment.Mvvm.Models;
-using SQLite;
+﻿using PlannerAssignment.Mvvm.Models;
 using System.Diagnostics;
 
 namespace PlannerAssignment.Utils
 {
     public class RequestManager
     {
-        private static string url = "https://gateway.apiportal.ns.nl/reisinformatie-api/api/v2/arrivals?uicCode=";
-        private static HttpClient client = new HttpClient();
-        private readonly SQLiteAsyncConnection _database;
+        private static string _arrivalUrl = "https://gateway.apiportal.ns.nl/reisinformatie-api/api/v2/arrivals?uicCode=";
+        private static string _stationUrl = "https://gateway.apiportal.ns.nl/reisinformatie-api/api/v2/stations?countryCodes=nl&q=";
+        private static HttpClient _client = new HttpClient();
+        private StationModel _currentStation;
+        private string _nextStation;
 
-        public RequestManager(SQLiteAsyncConnection database)
+        public RequestManager()
         {
-            _database = database;
+
         }
+
         public async Task<List<TrainModel>> GetTrainsListAsync()
         {
             try
             {
-                string jsonString = await client.GetStringAsync($"{url}8400621");
+
+                string jsonString = await _client.GetStringAsync($"{_arrivalUrl}/{_currentStation.Uic}");// TODO moet UIC code getten
                 List<TrainModel> trains = JsonUtil.ParseTrainListJson(jsonString);
                 if (trains == null)
                 {
@@ -34,5 +35,38 @@ namespace PlannerAssignment.Utils
                 return null;
             }
         }
+
+        public async Task<List<StationModel>> GetUICCodeAsync(string stationName)
+        {
+            try
+            {
+                string jsonString = await _client.GetStringAsync($"{_stationUrl}/{stationName}");
+                List<StationModel> stations = JsonUtil.ParseStationList<List<StationModel>>(jsonString);
+                if(stations != null)
+                {
+                    //checken if the requested stations name are correct if so we can use it in the GetTrainsListAsync method 
+                    foreach (StationModel station in stations)
+                    {
+                        if (station.NameMedium == stationName)
+                        {
+                            _currentStation.NameMedium = stationName;
+                        }
+                    }
+                }
+                else
+                {
+                    Application.Current.MainPage.DisplayAlert("Error", $"{stationName} is not found", "OK");
+                    return null;
+                }
+
+                return stations;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error getting message: {ex}");
+                return null;
+            }
+        }
+
     }
 }

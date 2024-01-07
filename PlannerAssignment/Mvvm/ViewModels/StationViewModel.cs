@@ -1,16 +1,16 @@
 ﻿using PlannerAssignment.Mvvm.Models;
 using PlannerAssignment.Utils;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 
 namespace PlannerAssignment.Mvvm.ViewModels
 {
-    public class LightsViewModel : BaseViewModel
+    public class StationViewModel : BaseViewModel
     {
         private readonly RequestManager _requestManager;
-        private ObservableCollection<TrainModel> _trains;
+        private ObservableCollection<StationModel> _trains;
+        private string _wantedStation;
 
-        public ObservableCollection<TrainModel> Trains
+        public ObservableCollection<StationModel> Stations
         {
             get { return _trains; }
             set
@@ -18,7 +18,7 @@ namespace PlannerAssignment.Mvvm.ViewModels
                 if (_trains != value)
                 {
                     _trains = value;
-                    OnPropertyChanged(nameof(Trains));
+                    OnPropertyChanged(nameof(Stations));
                 }
             }
         }
@@ -34,11 +34,12 @@ namespace PlannerAssignment.Mvvm.ViewModels
             }
         }
 
-        public LightsViewModel(RequestManager requestManager) : base(requestManager) 
+        public StationViewModel(RequestManager requestManager, string stationName) : base(requestManager)
         {
+            _wantedStation = stationName;
             _requestManager = requestManager;
-            Trains = new ObservableCollection<TrainModel>();
-            StartPollingAsync();
+            Stations = new ObservableCollection<StationModel>();
+            // StartPollingAsync();
         }
 
         private async Task StartPollingAsync()
@@ -48,7 +49,7 @@ namespace PlannerAssignment.Mvvm.ViewModels
                 while (true)
                 {
                     await FetchDataInternal();
-                    await Task.Delay(4000); 
+                    await Task.Delay(4000);
                 }
             });
         }
@@ -58,7 +59,7 @@ namespace PlannerAssignment.Mvvm.ViewModels
             try
             {
                 var timeout = Task.Delay(TimeSpan.FromSeconds(4));
-                var task = _requestManager.GetTrainsListAsync();
+                var task = _requestManager.GetUICCodeAsync(_wantedStation);
 
                 if (await Task.WhenAny(task, timeout) == timeout)
                 {
@@ -69,21 +70,21 @@ namespace PlannerAssignment.Mvvm.ViewModels
                     var lightsData = await task;
                     if (lightsData != null)
                     {
-                        Trains.Clear();
+                        Stations.Clear();
                         foreach (var light in lightsData)
                         {
                             //Debug.WriteLine($"{light.Name} {light.Index}");
-                            Trains.Add(light);
+                            Stations.Add(light);
                         }
                     }
-                    HasItems = Trains.Count > 0;
+                    HasItems = Stations.Count > 0;
                 }
             }
             catch (Exception ex)
             {
-                if (Trains.Count > 0)
+                if (Stations.Count > 0)
                 {
-                    Trains.Clear();
+                    Stations.Clear();
                     HasItems = false;
                 }
                 Application.Current.MainPage.DisplayAlert("Error", ex.Message, "OK");
@@ -91,3 +92,4 @@ namespace PlannerAssignment.Mvvm.ViewModels
         }
     }
 }
+
