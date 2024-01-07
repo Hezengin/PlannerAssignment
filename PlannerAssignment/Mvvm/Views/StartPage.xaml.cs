@@ -1,0 +1,19 @@
+﻿using PlannerAssignment.MVVM;
+
+namespace PlannerAssignment
+{
+    public partial class MainPage : ContentPage
+    {
+
+        public MainPage()
+        {
+            InitializeComponent();
+        }
+
+        private void OnCounterClicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new ResultPage()); 
+        }
+    }
+
+}

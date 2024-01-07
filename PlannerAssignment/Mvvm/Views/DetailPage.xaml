@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PlannerAssignment.Mvvm.Views.DetailPage"
+             Title="DetailPage">
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid.GestureRecognizers>
+            <TapGestureRecognizer Tapped="lampTapped" />
+        </Grid.GestureRecognizers>
+
+        <Grid Grid.Row="0" Margin="10" VerticalOptions="Start">
+            <BoxView Color="#333333" WidthRequest="160" HeightRequest="200" />
+            <BoxView Color="{Binding SelectedLight.Color}" WidthRequest="160" HeightRequest="200"/>
+            <Image x:Name="lampImage" Source="lamp.png" WidthRequest="160" HeightRequest="200" ></Image>
+        </Grid>
+
+        <VerticalStackLayout Grid.Row="1" VerticalOptions="Start" >
+            <Border Margin="10" HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand">
+                <VerticalStackLayout Margin="10">
+
+                    <HorizontalStackLayout>
+                        <Label Text="Name: " FontSize="Medium" FontAttributes="Bold" VerticalOptions="Center" />
+                        <Editor Text="{Binding SelectedLight.Name}" FontSize="Medium" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout>
+                        <Label Text="Type: " FontSize="Medium" FontAttributes="Bold" VerticalOptions="Center"/>
+                        <Editor Text="{Binding SelectedLight.Type}" FontSize="Medium" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout Margin="0,10,0,0">
+                        <Label Text="Color: " FontSize="Medium" FontAttributes="Bold" VerticalOptions="Center" />
+                        <Label Text="{Binding SelectedLight.Color}" FontSize="Medium" VerticalOptions="Center"  BackgroundColor="{Binding SelectedLight.Color}"/>
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout Margin="0,10,0,0">
+                        <Label Text="Brightness: " FontSize="Medium" FontAttributes="Bold" VerticalOptions="Center" />
+                        <Label x:Name="briLabel"  FontSize="Medium" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+                    <Slider x:Name="sliderBrightness" Margin="0,10,0,0" Minimum="0" Maximum="254" Value="{Binding SelectedLight.State.Brightness}" ValueChanged="SliderBrightness_ValueChanged"/>
+
+                    <HorizontalStackLayout Margin="0,10,0,0">
+                        <Label Text="Saturation: " FontSize="Medium" FontAttributes="Bold" VerticalOptions="Center" />
+                        <Label x:Name="satLabel"  FontSize="Medium" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+                    <Slider x:Name="sliderSaturation" Margin="0,10,0,0" Minimum="0" Maximum="255" Value="{Binding SelectedLight.State.Saturation}" ValueChanged="SliderSaturation_ValueChanged" />
+                    <HorizontalStackLayout Margin="0,10,0,0">
+                        <Label Text="Hue: " FontSize="Medium" FontAttributes="Bold" VerticalOptions="Center" />
+                        <Label x:Name="hueLabel" FontSize="Medium" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+                    <Slider x:Name="sliderHue" Margin="0,10,0,0" Minimum="0" Maximum="65535" Value="{Binding SelectedLight.State.Hue}" ValueChanged="SliderHue_ValueChanged" />
+
+                    <HorizontalStackLayout Margin="0,10,0,0" >
+                        <Label Text="Is On: " FontSize="Medium" FontAttributes="Bold" VerticalOptions="Center"/>
+                        <Label Text="{Binding SelectedLight.State.IsOn}" Margin="5,0,10,0" FontSize="Medium" VerticalOptions="Center" />
+                        <Switch x:Name="switchIsOn" IsToggled="{Binding SelectedLight.State.IsOn}"/>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+            <Button
+                 x:Name="refreshButton"
+                 Text="Tap to refresh or just pull down" 
+                 Clicked="refreshButtonClicked"
+                 HorizontalOptions="CenterAndExpand"
+                 Margin="10"/>
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

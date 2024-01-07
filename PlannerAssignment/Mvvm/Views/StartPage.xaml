@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PlannerAssignment.MainPage"
+             Title="Train Planner">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <VerticalStackLayout Margin="10" Grid.Row="0">
+            <Label Text="Give current location and the station of arrival below: " FontSize="Medium" FontAttributes="Bold" VerticalOptions="Center" />
+
+            <HorizontalStackLayout Margin="0,10,0,0">
+                <Label Text="Current Location: " FontSize="Medium" FontAttributes="Bold" VerticalOptions="Center"  />
+                <Editor FontSize="Medium" VerticalOptions="Center" WidthRequest="200" />
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout >
+                <Label Text="Use Current Location " FontSize="Small" FontAttributes="Bold" VerticalOptions="Center" />
+                <Switch x:Name="UseCurrentLocationSwitch" HorizontalOptions="Fill" />
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout Margin="0,20,0,0">
+                <Label Text="Station of Arrival: " FontSize="Medium" FontAttributes="Bold" VerticalOptions="Center" />
+                <Editor FontSize="Medium" VerticalOptions="Center" WidthRequest="200"/>
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+
+        <Button Grid.Row="1" VerticalOptions="Start" 
+             x:Name="SearchBtn"
+             Text="Search for possible trains" 
+             Clicked="OnCounterClicked"
+             FontAttributes="Bold"
+             Margin="20"
+             HorizontalOptions="Fill" />
+    </Grid>
+
+</ContentPage>
