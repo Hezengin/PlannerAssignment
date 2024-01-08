@@ -19,9 +19,10 @@ namespace PlannerAssignment
 
         private void OnSearchClicked(object sender, EventArgs e)
         {
-            string stationText = stationEditor.Text?.Trim();
-            string locationText = locationEditor.Text?.Trim();
-            ClearInputs();
+            string stationText = stationEditor.Text;
+            string locationText = locationEditor.Text;
+            bool switchIsOn = locationSwitch.IsToggled;
+
 
             if (string.IsNullOrEmpty(stationText))
             {
@@ -29,11 +30,14 @@ namespace PlannerAssignment
                 return;
             }
 
-            if (string.IsNullOrEmpty(locationText))
+            if (string.IsNullOrEmpty(locationText) && switchIsOn == false)
             {
                 ShowAlert("Error", "Location field is empty. Provide a location or enable the switch to use the current location!");
                 return;
             }
+
+            ClearInputs();
+
 
             stationViewModel = new StationViewModel(requestManager, stationText);
             Navigation.PushAsync(new StationPage(stationViewModel));
@@ -46,10 +50,13 @@ namespace PlannerAssignment
                 //TODO Use Current Location
                 locationEditor.IsEnabled = false;
                 locationEditor.Text = null;
+                locationSwitch.IsToggled = true;
             }
             else
             {
                 locationEditor.IsEnabled = true;
+                locationSwitch.IsToggled = false;
+
             }
         }
 
