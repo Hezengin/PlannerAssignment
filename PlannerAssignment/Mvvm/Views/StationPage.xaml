@@ -2,11 +2,49 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PlannerAssignment.Mvvm.Views.StationPage"
-             Title="StationPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             xmlns:local="clr-namespace:PlannerAssignment.Mvvm.Converters"
+             Shell.BackgroundColor="LimeGreen"
+             Shell.TitleColor="White"
+             Title="Stations that are found">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:BooleanNegationConverter x:Key="BooleanNegationConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <RefreshView IsRefreshing="{Binding IsRefreshing}"
+        Command="{Binding FetchDataCommand}">
+        <Grid>
+            <Label x:Name="emptyLabel" Text="No items found. Refresh to show!" FontSize="16" HorizontalOptions="Center" Margin="10" IsVisible="{Binding HasItems, Converter={StaticResource BooleanNegationConverter}}" />
+            <CollectionView x:Name="collectionView" ItemsLayout="VerticalList" IsGrouped="False" SelectionMode="Single" ItemsSource="{Binding Stations}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame  Margin="10">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="collectionView_SelectionChanged" />
+                            </Frame.GestureRecognizers>
+                            <VerticalStackLayout Grid.Column="0" Padding="5" >
+                                <HorizontalStackLayout>
+                                    <Grid>
+                                        <Image x:Name="nsImage" Source="ns_logo.png" WidthRequest="80" HeightRequest="100" ></Image>
+                                    </Grid>
+                                    <VerticalStackLayout Margin="30,0,0,0">
+                                        <HorizontalStackLayout>
+                                            <Label Text="Name: " FontSize="Medium" FontAttributes="Bold" VerticalOptions="Center" />
+                                            <Label Text="{Binding Namen.Long}" FontSize="Medium" VerticalOptions="Center" />
+                                        </HorizontalStackLayout>
+                                        <HorizontalStackLayout Margin="0,10,0,0">
+                                            <Label Text="Type: " FontSize="Medium" FontAttributes="Bold" VerticalOptions="Center"/>
+                                            <Label Text="{Binding StationType}" FontSize="Small" VerticalOptions="Center" />
+                                        </HorizontalStackLayout>
+                                    </VerticalStackLayout>
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+    </RefreshView>
 </ContentPage>

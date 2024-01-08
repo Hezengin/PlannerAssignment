@@ -29,20 +29,12 @@ namespace PlannerAssignment.Utils
             }
         }
 
-        public static T ParseStationList<T>(string jsonString) where T : class
+        public static StationModel ParseStationList(string jsonString)
         {
             try
             {
-                if (typeof(T).IsGenericType && typeof(T).GetGenericTypeDefinition() == typeof(List<>))
-                {
-                    var list = JsonConvert.DeserializeObject<List<T>>(jsonString);
-                    return list as T;
-                }
-                else
-                {
-                    var obj = JsonConvert.DeserializeObject<T>(jsonString);
-                    return obj;
-                }
+                var stationModel = JsonConvert.DeserializeObject<StationModel>(jsonString);
+                return stationModel;
             }
             catch (Exception ex)
             {

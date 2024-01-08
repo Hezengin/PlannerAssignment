@@ -1,23 +1,24 @@
 ﻿using PlannerAssignment.Mvvm.Models;
 using PlannerAssignment.Utils;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 namespace PlannerAssignment.Mvvm.ViewModels
 {
     public class StationViewModel : BaseViewModel
     {
         private readonly RequestManager _requestManager;
-        private ObservableCollection<StationModel> _trains;
+        private ObservableCollection<Station> _stations;
         private string _wantedStation;
 
-        public ObservableCollection<StationModel> Stations
+        public ObservableCollection<Station> Stations
         {
-            get { return _trains; }
+            get { return _stations; }
             set
             {
-                if (_trains != value)
+                if (_stations != value)
                 {
-                    _trains = value;
+                    _stations = value;
                     OnPropertyChanged(nameof(Stations));
                 }
             }
@@ -38,7 +39,7 @@ namespace PlannerAssignment.Mvvm.ViewModels
         {
             _wantedStation = stationName;
             _requestManager = requestManager;
-            Stations = new ObservableCollection<StationModel>();
+            Stations = new ObservableCollection<Station>();
             // StartPollingAsync();
         }
 
@@ -67,14 +68,13 @@ namespace PlannerAssignment.Mvvm.ViewModels
                 }
                 else
                 {
-                    var lightsData = await task;
-                    if (lightsData != null)
+                    var stationsData = await task;
+                    if (stationsData != null)
                     {
                         Stations.Clear();
-                        foreach (var light in lightsData)
+                        foreach (var station in stationsData.Stations)
                         {
-                            //Debug.WriteLine($"{light.Name} {light.Index}");
-                            Stations.Add(light);
+                            Stations.Add(station);
                         }
                     }
                     HasItems = Stations.Count > 0;

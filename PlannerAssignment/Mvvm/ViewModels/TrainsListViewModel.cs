@@ -38,7 +38,7 @@ namespace PlannerAssignment.Mvvm.ViewModels
         {
             _requestManager = requestManager;
             Trains = new ObservableCollection<TrainModel>();
-            StartPollingAsync();
+            //StartPollingAsync();
         }
 
         private async Task StartPollingAsync()
@@ -58,26 +58,26 @@ namespace PlannerAssignment.Mvvm.ViewModels
             try
             {
                 var timeout = Task.Delay(TimeSpan.FromSeconds(4));
-                var task = _requestManager.GetTrainsListAsync();
+                //var task = _requestManager.GetTrainsListAsync();
 
-                if (await Task.WhenAny(task, timeout) == timeout)
-                {
-                    throw new Exception("Server did not respond within the specified time limit.");
-                }
-                else
-                {
-                    var lightsData = await task;
-                    if (lightsData != null)
-                    {
-                        Trains.Clear();
-                        foreach (var light in lightsData)
-                        {
-                            //Debug.WriteLine($"{light.Name} {light.Index}");
-                            Trains.Add(light);
-                        }
-                    }
-                    HasItems = Trains.Count > 0;
-                }
+                //if (await Task.WhenAny(task, timeout) == timeout)
+                //{
+                //    throw new Exception("Server did not respond within the specified time limit.");
+                //}
+                //else
+                //{
+                //    var lightsData = await task;
+                //    if (lightsData != null)
+                //    {
+                //        Trains.Clear();
+                //        foreach (var light in lightsData)
+                //        {
+                //            //Debug.WriteLine($"{light.Name} {light.Index}");
+                //            Trains.Add(light);
+                //        }
+                //    }
+                //    HasItems = Trains.Count > 0;
+                //}
             }
             catch (Exception ex)
             {

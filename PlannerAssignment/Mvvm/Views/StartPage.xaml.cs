@@ -38,7 +38,6 @@ namespace PlannerAssignment
 
             ClearInputs();
 
-
             stationViewModel = new StationViewModel(requestManager, stationText);
             Navigation.PushAsync(new StationPage(stationViewModel));
         }
@@ -56,7 +55,6 @@ namespace PlannerAssignment
             {
                 locationEditor.IsEnabled = true;
                 locationSwitch.IsToggled = false;
-
             }
         }
 

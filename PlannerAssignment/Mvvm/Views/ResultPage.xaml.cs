@@ -8,11 +8,12 @@ namespace PlannerAssignment.MVVM;
 public partial class ResultPage : ContentPage
 {
     RequestManager requestManager;
-    TrainsListViewModel trainsViewModel;
 
-    public ResultPage()
+    public ResultPage(TrainsListViewModel trainsViewModel)
 	{
 		InitializeComponent();
+        requestManager = new RequestManager();
+        BindingContext = trainsViewModel;
 	}
 
     public async void collectionView_SelectionChanged(object o, EventArgs e)

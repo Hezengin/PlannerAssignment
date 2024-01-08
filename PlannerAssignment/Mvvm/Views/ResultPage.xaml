@@ -2,6 +2,8 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PlannerAssignment.MVVM.ResultPage"
+             Shell.BackgroundColor="LimeGreen"
+             Shell.TitleColor="White"
              Title="Station: " 
              xmlns:local="clr-namespace:PlannerAssignment.Mvvm.Converters">
     <ContentPage.Resources>
@@ -24,9 +26,7 @@
                             <VerticalStackLayout Grid.Column="0" Padding="5" >
                                 <HorizontalStackLayout>
                                     <Grid>
-                                        <BoxView Color="#333333" WidthRequest="80" HeightRequest="100" />
-                                        <BoxView Color="{Binding Color}" WidthRequest="80" HeightRequest="100"/>
-                                        <Image x:Name="lampImage" Source="lamp.png" WidthRequest="80" HeightRequest="100" ></Image>
+                                        <Image x:Name="nsImage" Source="ns_logo.png" WidthRequest="80" HeightRequest="100" ></Image>
                                     </Grid>
                                     <VerticalStackLayout Margin="30,0,0,0">
                                         <HorizontalStackLayout>
