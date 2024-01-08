@@ -16,12 +16,12 @@ namespace PlannerAssignment.Utils
 
         }
 
+        //TODO _currentStation is null fix it
         public async Task<DepartureTrainModel> GetDeparturingTrainsListAsync()
         {
             try
             {
                 string neededUrl = _departureUrl + _currentStation.UICCode;
-                Debug.WriteLine(neededUrl);
 
                 _client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", "cfba573a8d014708aa013c32453eca8e");
 
