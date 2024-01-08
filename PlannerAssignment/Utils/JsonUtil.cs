@@ -7,20 +7,26 @@ namespace PlannerAssignment.Utils
 {
     public static class JsonUtil
     {
-        public static List<TrainModel> ParseTrainListJson(string jsonString)
+        public static ArrivalTrainModel ParseArrivingTrainListJson(string jsonString)
         {
             try
             {
-                var trains = JsonConvert.DeserializeObject<Dictionary<string, JObject>>(jsonString);
-                List<TrainModel> Trains = new List<TrainModel>();
+                var trains = JsonConvert.DeserializeObject<ArrivalTrainModel>(jsonString);
+                return trains;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error parsing JSON: {ex.Message}");
+                return null;
+            }
+        }
 
-                foreach (var item in trains)
-                {
-                    TrainModel model = item.Value.ToObject<TrainModel>();
-                    Trains.Add(model);
-                }
-
-                return Trains;
+        public static DepartureTrainModel ParseDeparturingTrainListJson(string jsonString)
+        {
+            try
+            {
+                var trains = JsonConvert.DeserializeObject<DepartureTrainModel>(jsonString);
+                return trains;
             }
             catch (Exception ex)
             {

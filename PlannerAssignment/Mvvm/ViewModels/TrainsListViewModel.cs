@@ -2,42 +2,72 @@
 using PlannerAssignment.Utils;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using static PlannerAssignment.Mvvm.Models.ArrivalTrainModel;
+using static PlannerAssignment.Mvvm.Models.DepartureTrainModel;
+
 
 namespace PlannerAssignment.Mvvm.ViewModels
 {
     public class TrainsListViewModel : BaseViewModel
     {
         private readonly RequestManager _requestManager;
-        private ObservableCollection<TrainModel> _trains;
 
-        public ObservableCollection<TrainModel> Trains
+        //private ObservableCollection<ArrivalTrain> _arrivals;
+        //public ObservableCollection<ArrivalTrain> Arrivals
+        //{
+        //    get { return _arrivals; }
+        //    set
+        //    {
+        //        if (_arrivals != value)
+        //        {
+        //            _arrivals = value;
+        //            OnPropertyChanged(nameof(Arrivals));
+        //        }
+        //    }
+        //}
+
+        private ObservableCollection<DepartureTrain> _departures;
+        public ObservableCollection<DepartureTrain> Departures
         {
-            get { return _trains; }
+            get { return _departures; }
             set
             {
-                if (_trains != value)
+                if (_departures != value)
                 {
-                    _trains = value;
-                    OnPropertyChanged(nameof(Trains));
+                    _departures = value;
+                    OnPropertyChanged(nameof(Departures));
                 }
             }
         }
 
-        private bool _hasItems;
-        public bool HasItems
+        private bool _depHasItems;
+        public bool DepHasItems
         {
-            get { return _hasItems; }
+            get { return _depHasItems; }
             set
             {
-                _hasItems = value;
-                OnPropertyChanged(nameof(HasItems));
+                _depHasItems = value;
+                OnPropertyChanged(nameof(DepHasItems));
             }
         }
+
+        //private bool _arrHasItems;
+        //public bool ArrHasItems
+        //{
+        //    get { return _arrHasItems; }
+        //    set
+        //    {
+        //        _arrHasItems = value;
+        //        OnPropertyChanged(nameof(ArrHasItems));
+        //    }
+        //}
 
         public TrainsListViewModel(RequestManager requestManager) : base(requestManager) 
         {
             _requestManager = requestManager;
-            Trains = new ObservableCollection<TrainModel>();
+           // Arrivals = new ObservableCollection<ArrivalTrain>();
+            Departures = new ObservableCollection<DepartureTrain>();
+
             //StartPollingAsync();
         }
 
@@ -58,33 +88,50 @@ namespace PlannerAssignment.Mvvm.ViewModels
             try
             {
                 var timeout = Task.Delay(TimeSpan.FromSeconds(4));
-                //var task = _requestManager.GetTrainsListAsync();
+                //var task = _requestManager.GetArrivingTrainsListAsync();
+                var task2 = _requestManager.GetDeparturingTrainsListAsync();
 
                 //if (await Task.WhenAny(task, timeout) == timeout)
                 //{
                 //    throw new Exception("Server did not respond within the specified time limit.");
-                //}
-                //else
-                //{
-                //    var lightsData = await task;
-                //    if (lightsData != null)
-                //    {
-                //        Trains.Clear();
-                //        foreach (var light in lightsData)
-                //        {
-                //            //Debug.WriteLine($"{light.Name} {light.Index}");
-                //            Trains.Add(light);
-                //        }
-                //    }
-                //    HasItems = Trains.Count > 0;
-                //}
+                //}else
+                if (await Task.WhenAny(task2, timeout) == timeout)
+                {
+                    throw new Exception("Server did not respond within the specified time limit.");
+                }
+                else
+                {
+                    //var arrivingTrainData = await task;
+                    var departingTrainData = await task2;
+                    
+                    //if (arrivingTrainData != null || departingTrainData != null)
+                    if(departingTrainData != null)
+                    {
+                       // Arrivals.Clear();
+                        Departures.Clear();
+
+                        //foreach (var train in arrivingTrainData.payload.arrivals)
+                        //{
+                        //    Arrivals.Add(train);
+                        //}
+                        foreach(var train in departingTrainData.payload.departures)
+                        {
+                            Departures.Add(train);
+                        }
+                    }
+                    //ArrHasItems = Arrivals.Count > 0;
+                    DepHasItems = Departures.Count > 0;
+                }
             }
             catch (Exception ex)
             {
-                if (Trains.Count > 0)
+                //if (Arrivals.Count > 0 || Departures.Count > 0)
+                if(Departures.Count > 0)
                 {
-                    Trains.Clear();
-                    HasItems = false;
+                    //Arrivals.Clear();
+                    Departures.Clear();
+                    //ArrHasItems = false;
+                    DepHasItems = false;
                 }
                 Application.Current.MainPage.DisplayAlert("Error", ex.Message, "OK");
             }

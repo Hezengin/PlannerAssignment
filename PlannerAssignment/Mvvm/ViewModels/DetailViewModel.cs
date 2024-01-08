@@ -2,6 +2,7 @@
 using PlannerAssignment.Utils;
 using System.Diagnostics;
 using System.Windows.Input;
+using static PlannerAssignment.Mvvm.Models.ArrivalTrainModel;
 
 namespace PlannerAssignment.Mvvm.ViewModels
 {
@@ -13,8 +14,8 @@ namespace PlannerAssignment.Mvvm.ViewModels
         public ICommand UpdateBrightnessCommand { get; set; }
         public ICommand SwitchToggleCommand { get; set; }
 
-        public TrainModel _selectedTrain;
-        public TrainModel SelectedTrain
+        public ArrivalTrain _selectedTrain;
+        public ArrivalTrain SelectedTrain
         {
             get => _selectedTrain;
             set
@@ -27,7 +28,7 @@ namespace PlannerAssignment.Mvvm.ViewModels
             }
         }
 
-        public DetailViewModel(RequestManager requestManager, TrainModel selectedTrain) : base(requestManager)
+        public DetailViewModel(RequestManager requestManager, ArrivalTrain selectedTrain) : base(requestManager)
         {
             _requestManager = requestManager;
             SelectedTrain = selectedTrain;

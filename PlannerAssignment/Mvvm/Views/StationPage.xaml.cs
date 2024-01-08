@@ -27,7 +27,6 @@ public partial class StationPage : ContentPage
             Debug.WriteLine($"Selected Light: {selectedStation.Namen.Long}");
             collectionView.SelectedItem = selectedStation;
             
-          
             await Navigation.PushAsync(new ResultPage(trainsListViewModel));
             collectionView.SelectedItem = null;
         }

@@ -4,7 +4,7 @@
              x:Class="PlannerAssignment.MVVM.ResultPage"
              Shell.BackgroundColor="LimeGreen"
              Shell.TitleColor="White"
-             Title="Station: " 
+             Title="List of trains" 
              xmlns:local="clr-namespace:PlannerAssignment.Mvvm.Converters">
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -13,16 +13,16 @@
     </ContentPage.Resources>
 
     <RefreshView IsRefreshing="{Binding IsRefreshing}"
-            Command="{Binding FetchDataCommand}">
+    Command="{Binding FetchDataCommand}">
         <Grid>
-            <Label x:Name="emptyLabel" Text="No items found. Refresh to show!" FontSize="16" HorizontalOptions="Center" Margin="10" IsVisible="{Binding HasItems, Converter={StaticResource BooleanNegationConverter}}" />
-            <CollectionView x:Name="collectionView" ItemsLayout="VerticalList" IsGrouped="False" SelectionMode="Single" ItemsSource="{Binding Lights}">
+            <Label x:Name="emptyLabel" Text="No items found. Refresh to show!" FontSize="16" HorizontalOptions="Center" Margin="10" IsVisible="{Binding DepHasItems, Converter={StaticResource BooleanNegationConverter}}" />
+            <CollectionView x:Name="collectionView" ItemsLayout="VerticalList" IsGrouped="False" SelectionMode="Single" ItemsSource="{Binding Departures}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Border  Margin="10">
-                            <Border.GestureRecognizers>
+                        <Frame  Margin="10">
+                            <Frame.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="collectionView_SelectionChanged" />
-                            </Border.GestureRecognizers>
+                            </Frame.GestureRecognizers>
                             <VerticalStackLayout Grid.Column="0" Padding="5" >
                                 <HorizontalStackLayout>
                                     <Grid>
@@ -30,25 +30,21 @@
                                     </Grid>
                                     <VerticalStackLayout Margin="30,0,0,0">
                                         <HorizontalStackLayout>
-                                            <Label x:Name="label" Text="Name: " FontSize="Medium" FontAttributes="Bold" VerticalOptions="Center" />
-                                            <Label Text="{Binding Name}" FontSize="Medium" VerticalOptions="Center" />
+                                            <Label Text="Name: " FontSize="Medium" FontAttributes="Bold" VerticalOptions="Center" />
+                                            <Label Text="{Binding name}" FontSize="Medium" VerticalOptions="Center" />
+                                        </HorizontalStackLayout>
+                                        <HorizontalStackLayout>
+                                            <Label Text="Direction: " FontSize="Medium" FontAttributes="Bold" VerticalOptions="Center" />
+                                            <Label Text="{Binding direction}" FontSize="Medium" VerticalOptions="Center" />
                                         </HorizontalStackLayout>
                                         <HorizontalStackLayout Margin="0,10,0,0">
-                                            <Label Text="Color: " FontSize="Medium" FontAttributes="Bold" VerticalOptions="Center" />
-                                            <Label Text="{Binding Color}" FontSize="Medium" VerticalOptions="Center"  BackgroundColor="{Binding Color}"/>
-                                        </HorizontalStackLayout>
-                                        <HorizontalStackLayout Margin="0,10,0,0">
-                                            <Label Text="Type: " FontSize="Medium" FontAttributes="Bold" VerticalOptions="Center"/>
-                                            <Label Text="{Binding Type}" FontSize="Medium" VerticalOptions="Center" />
-                                        </HorizontalStackLayout>
-                                        <HorizontalStackLayout Margin="0,10,0,0">
-                                            <Label Text="Is On: " FontSize="Medium" FontAttributes="Bold" VerticalOptions="Center"/>
-                                            <Label Text="{Binding State.IsOn}" FontSize="Medium" VerticalOptions="Center" />
+                                            <Label Text="departureStatus: " FontSize="Medium" FontAttributes="Bold" VerticalOptions="Center"/>
+                                            <Label Text="{Binding departureStatus}" FontSize="Small" VerticalOptions="Center" />
                                         </HorizontalStackLayout>
                                     </VerticalStackLayout>
                                 </HorizontalStackLayout>
                             </VerticalStackLayout>
-                        </Border>
+                        </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>

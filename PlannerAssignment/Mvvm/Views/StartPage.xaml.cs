@@ -58,7 +58,6 @@ namespace PlannerAssignment
             }
         }
 
-
         private void ClearInputs()
         {
             stationEditor.Text = null;
@@ -70,6 +69,5 @@ namespace PlannerAssignment
         {
             Application.Current.MainPage.DisplayAlert(title, message, "OK");
         }
-
     }
 }

@@ -2,9 +2,8 @@
 
 namespace PlannerAssignment.Mvvm.Models
 {
-    public class TrainModel
+    public class ArrivalTrainModel
     {
-
         [JsonProperty("payload")]
         public Payload payload { get; set; }
 
@@ -15,7 +14,7 @@ namespace PlannerAssignment.Mvvm.Models
         public Meta meta { get; set; }
 
 
-        public class Arrival
+        public class ArrivalTrain
         {
             [JsonProperty("origin")]
             public string origin { get; set; }
@@ -90,7 +89,7 @@ namespace PlannerAssignment.Mvvm.Models
             public string source { get; set; }
 
             [JsonProperty("arrivals")]
-            public List<Arrival> arrivals { get; set; }
+            public List<ArrivalTrain> arrivals { get; set; }
         }
 
         public class Product
