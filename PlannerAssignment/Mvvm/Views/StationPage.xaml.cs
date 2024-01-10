@@ -27,7 +27,7 @@ public partial class StationPage : ContentPage
             collectionView.SelectedItem = selectedStation;
             requestManager.SetCurrentStation(selectedStation);
             
-            await Navigation.PushAsync(new ResultPage(trainsListViewModel, requestManager));
+            await Navigation.PushAsync(new DeparturesPage(trainsListViewModel, requestManager));
             collectionView.SelectedItem = null;
         }
     }

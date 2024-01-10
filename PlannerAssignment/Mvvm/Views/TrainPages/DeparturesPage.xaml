@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="PlannerAssignment.MVVM.ResultPage"
+             x:Class="PlannerAssignment.MVVM.DeparturesPage"
              Shell.BackgroundColor="LimeGreen"
              Shell.TitleColor="White"
-             Title="List of trains" 
+             Title="List of Departures" 
              xmlns:local="clr-namespace:PlannerAssignment.Mvvm.Converters">
     <ContentPage.Resources>
         <ResourceDictionary>

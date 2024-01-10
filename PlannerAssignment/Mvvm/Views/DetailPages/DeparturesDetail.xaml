@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PlannerAssignment.Mvvm.Views.DetailPages.DeparturesDetail"
+             Shell.BackgroundColor="LimeGreen"
+             Shell.TitleColor="White"
+             Title="Train Details">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Margin="10" VerticalOptions="Start">
+            <Image x:Name="nsImage" Source="ns_logo.png" WidthRequest="80" HeightRequest="100" ></Image>
+        </Grid>
+        <VerticalStackLayout Grid.Row="1" VerticalOptions="Start" >
+            <Border Margin="10" HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand">
+                <VerticalStackLayout Margin="10">
+                    <HorizontalStackLayout>
+                    <VerticalStackLayout Margin="20,0,0,0">
+                        <HorizontalStackLayout Margin="0,10,0,0">
+                            <Label Text="Name: " FontSize="Medium" FontAttributes="Bold" VerticalOptions="Center" />
+                                <Label Text="{Binding SelectedTrain.name}" FontSize="Medium" VerticalOptions="Center"/>
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout Margin="0,10,0,0">
+                            <Label Text="Direction: " FontSize="Medium" FontAttributes="Bold" VerticalOptions="Center" />
+                                <Label Text="{Binding SelectedTrain.direction}" FontSize="Medium" VerticalOptions="Center"/>
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout Margin="0,10,0,0">
+                            <Label Text="Status: " FontSize="Medium" FontAttributes="Bold" VerticalOptions="Center"/>
+                                <Label Text="{Binding SelectedTrain.status}" FontSize="Medium" VerticalOptions="Center"/>
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout Margin="0,10,0,0">
+                            <Label Text="Date: " FontSize="Medium" FontAttributes="Bold" VerticalOptions="Center"/>
+                                <Label Text="{Binding SelectedTrain.plannedDateTime}" FontSize="Medium" VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+            <Button
+                 x:Name="refreshButton"
+                 Text="Tap to refresh or just pull down" 
+                 Clicked="refreshButtonClicked"
+                 BackgroundColor="LimeGreen"
+                 HorizontalOptions="CenterAndExpand"
+                 Margin="10"/>
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

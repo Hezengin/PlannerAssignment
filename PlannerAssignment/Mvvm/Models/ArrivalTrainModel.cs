@@ -17,7 +17,7 @@ namespace PlannerAssignment.Mvvm.Models
         public class ArrivalTrain
         {
             [JsonProperty("origin")]
-            public string direction { get; set; }
+            public string origin { get; set; }
 
             [JsonProperty("name")]
             public string name { get; set; }

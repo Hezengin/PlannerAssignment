@@ -1,20 +1,20 @@
-using PlannerAssignment.Mvvm.Models;
 using PlannerAssignment.Mvvm.ViewModels;
+using PlannerAssignment.Mvvm.ViewModels.DetailViewModels;
 using PlannerAssignment.Mvvm.Views;
+using PlannerAssignment.Mvvm.Views.DetailPages;
 using PlannerAssignment.Utils;
 using System.Diagnostics;
-using static PlannerAssignment.Mvvm.Models.ArrivalTrainModel;
 using static PlannerAssignment.Mvvm.Models.DepartureTrainModel;
 
 
 namespace PlannerAssignment.MVVM;
 
-public partial class ResultPage : ContentPage
+public partial class DeparturesPage : ContentPage
 {
     RequestManager _requestManager;
     DeparturesViewModel _departuresViewModel;
     ArrivalsViewModel _arrivalsViewModel;
-    public ResultPage(DeparturesViewModel trainsViewModel, RequestManager requestManager)
+    public DeparturesPage(DeparturesViewModel trainsViewModel, RequestManager requestManager)
 	{
 		InitializeComponent();
         _requestManager = requestManager;
@@ -29,9 +29,9 @@ public partial class ResultPage : ContentPage
         {
             Debug.WriteLine($"Selected train: {selectedTrain.direction}");
             collectionView.SelectedItem = selectedTrain;
-            //DetailViewModel detailViewModel = new DetailViewModel(requestManager, selectedTrain);
+            DepartureDetailVM departureDetail = new DepartureDetailVM(_requestManager, selectedTrain);
 
-            //await Navigation.PushAsync(new DetailPage(detailViewModel));
+            await Navigation.PushAsync(new DeparturesDetail(departureDetail, _requestManager));
             collectionView.SelectedItem = null;
         }
     }
@@ -39,12 +39,10 @@ public partial class ResultPage : ContentPage
     public async void OnDepBtnClicked(object o, EventArgs e)
     {
         await _departuresViewModel.FetchData();
-        collectionView.ItemsSource = _departuresViewModel.Departures;
     }
 
     public async void OnArrBtnClicked(object o, EventArgs e)
     {
-        await _arrivalsViewModel.FetchData();
-        collectionView.ItemsSource= _arrivalsViewModel.Arrivals;
+        await Navigation.PushAsync(new ArrivalsPage(_arrivalsViewModel, _requestManager));
     }
 }

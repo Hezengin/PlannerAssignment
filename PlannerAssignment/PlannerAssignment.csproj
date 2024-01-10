@@ -72,19 +72,31 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Mvvm\Views\DetailPages\DeparturesDetail.xaml.cs">
+	    <DependentUpon>DeparturesDetail.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Mvvm\Views\StartPage.xaml.cs">
 	    <DependentUpon>StartPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Mvvm\Views\TrainPages\DeparturesPage.xaml.cs">
+	    <DependentUpon>DeparturesPage.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Mvvm\Views\DetailPage.xaml">
+	  <MauiXaml Update="Mvvm\Views\DetailPages\ArrivalsDetail.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Mvvm\Views\TrainPages\ArrivalsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Mvvm\Views\DetailPages\DeparturesDetail.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Mvvm\Views\MapPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Mvvm\Views\ResultPage.xaml">
+	  <MauiXaml Update="Mvvm\Views\TrainPages\DeparturesPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Mvvm\Views\StationPage.xaml">
