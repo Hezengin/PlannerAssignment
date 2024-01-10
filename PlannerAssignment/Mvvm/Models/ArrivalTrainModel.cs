@@ -17,7 +17,7 @@ namespace PlannerAssignment.Mvvm.Models
         public class ArrivalTrain
         {
             [JsonProperty("origin")]
-            public string origin { get; set; }
+            public string direction { get; set; }
 
             [JsonProperty("name")]
             public string name { get; set; }
@@ -53,7 +53,7 @@ namespace PlannerAssignment.Mvvm.Models
             public List<Message> messages { get; set; }
 
             [JsonProperty("arrivalStatus")]
-            public string arrivalStatus { get; set; }
+            public string status { get; set; }
         }
 
         public class Disruptions

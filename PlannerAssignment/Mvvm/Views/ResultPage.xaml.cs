@@ -11,13 +11,16 @@ namespace PlannerAssignment.MVVM;
 
 public partial class ResultPage : ContentPage
 {
-    RequestManager requestManager;
-
-    public ResultPage(TrainsListViewModel trainsViewModel)
+    RequestManager _requestManager;
+    DeparturesViewModel _departuresViewModel;
+    ArrivalsViewModel _arrivalsViewModel;
+    public ResultPage(DeparturesViewModel trainsViewModel, RequestManager requestManager)
 	{
 		InitializeComponent();
-        requestManager = new RequestManager();
+        _requestManager = requestManager;
         BindingContext = trainsViewModel;
+        _departuresViewModel = trainsViewModel;
+        _arrivalsViewModel = new ArrivalsViewModel(requestManager);
 	}
 
     public async void collectionView_SelectionChanged(object o, EventArgs e)
@@ -31,5 +34,17 @@ public partial class ResultPage : ContentPage
             //await Navigation.PushAsync(new DetailPage(detailViewModel));
             collectionView.SelectedItem = null;
         }
+    }
+
+    public async void OnDepBtnClicked(object o, EventArgs e)
+    {
+        await _departuresViewModel.FetchData();
+        collectionView.ItemsSource = _departuresViewModel.Departures;
+    }
+
+    public async void OnArrBtnClicked(object o, EventArgs e)
+    {
+        await _arrivalsViewModel.FetchData();
+        collectionView.ItemsSource= _arrivalsViewModel.Arrivals;
     }
 }

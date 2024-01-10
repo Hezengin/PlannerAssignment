@@ -8,7 +8,7 @@ namespace PlannerAssignment.Mvvm.Views;
 
 public partial class StationPage : ContentPage
 {
-    TrainsListViewModel trainsListViewModel;
+    DeparturesViewModel trainsListViewModel;
     RequestManager requestManager;
 
     public StationPage(StationViewModel stationViewModel)
@@ -16,18 +16,18 @@ public partial class StationPage : ContentPage
 		InitializeComponent();
 		requestManager = new RequestManager();
         BindingContext = stationViewModel;
-
-        trainsListViewModel = new TrainsListViewModel(requestManager);
+        trainsListViewModel = new DeparturesViewModel(requestManager);
 	}
 
     public async void collectionView_SelectionChanged(object o, EventArgs e)
     {
         if (o is Frame frame && frame.BindingContext is Station selectedStation)
         {
-            Debug.WriteLine($"Selected Light: {selectedStation.Namen.Long}");
+            Debug.WriteLine($"Selected Station: {selectedStation.Namen.Long}");
             collectionView.SelectedItem = selectedStation;
+            requestManager.SetCurrentStation(selectedStation);
             
-            await Navigation.PushAsync(new ResultPage(trainsListViewModel));
+            await Navigation.PushAsync(new ResultPage(trainsListViewModel, requestManager));
             collectionView.SelectedItem = null;
         }
     }

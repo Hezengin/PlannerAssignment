@@ -33,7 +33,9 @@
         <Button Grid.Row="1" VerticalOptions="Start" 
              x:Name="SearchBtn"
              Text="Search for possible trains" 
+             TextColor="Black"
              Clicked="OnSearchClicked"
+             BackgroundColor="LimeGreen"
              FontAttributes="Bold"
              Margin="20"
              HorizontalOptions="Fill" />

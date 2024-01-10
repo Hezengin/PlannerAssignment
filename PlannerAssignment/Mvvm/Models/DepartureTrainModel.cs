@@ -60,7 +60,7 @@ namespace PlannerAssignment.Mvvm.Models
             public List<Message> messages { get; set; }
 
             [JsonProperty("departureStatus")]
-            public string departureStatus { get; set; }
+            public string status { get; set; }
         }
 
         public class Disruptions

@@ -16,7 +16,11 @@ namespace PlannerAssignment.Utils
 
         }
 
-        //TODO _currentStation is null fix it
+        public void SetCurrentStation(Station station)
+        {
+            _currentStation = station;
+        }
+
         public async Task<DepartureTrainModel> GetDeparturingTrainsListAsync()
         {
             try
@@ -37,7 +41,7 @@ namespace PlannerAssignment.Utils
                 }
                 else
                 {
-                    Application.Current.MainPage.DisplayAlert("Error", $"{trains} is not found", "OK");
+                    Application.Current.MainPage.DisplayAlert("Error", "No Trains at the moment", "OK");
                     return null;
                 }
             }
@@ -68,7 +72,7 @@ namespace PlannerAssignment.Utils
                 }
                 else
                 {
-                    Application.Current.MainPage.DisplayAlert("Error", $"{trains} is not found", "OK");
+                    Application.Current.MainPage.DisplayAlert("Error", "No Trains at the moment", "OK");
                     return null;
                 }
             }
@@ -97,6 +101,7 @@ namespace PlannerAssignment.Utils
 
                 if (stations != null && stations.Stations != null && stations.Stations.Count > 0)
                 {
+                    
                     return stations;
                 }
                 else
