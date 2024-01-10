@@ -1,5 +1,8 @@
 ﻿using PlannerAssignment.Mvvm.Models;
+using PolylineEncoder.Net.Utility;
 using System.Diagnostics;
+using System.Net.Http.Json;
+using System.Text.Json.Nodes;
 
 namespace PlannerAssignment.Utils
 {
@@ -8,6 +11,7 @@ namespace PlannerAssignment.Utils
         private static string _arrivalUrl = "https://gateway.apiportal.ns.nl/reisinformatie-api/api/v2/arrivals?uicCode=";
         private static string _departureUrl = "https://gateway.apiportal.ns.nl/reisinformatie-api/api/v2/departures?uicCode=";
         private static string _stationUrl = "https://gateway.apiportal.ns.nl/reisinformatie-api/api/v2/stations?countryCodes=nl&q=";
+        private static string _googleApiKey = "AIzaSyBXG_XrA3JRTL58osjxd0DbqH563e2t84o";
         private static HttpClient _client = new HttpClient();
         private Station _currentStation;
 
@@ -117,7 +121,47 @@ namespace PlannerAssignment.Utils
             }
         }
 
+        public async Task<List<Location>> GetRoutePolylineLocations(Location userLocation, Location endLocation)
+        {
 
+            List<Location> locations = new List<Location>();
+
+            //Nederlandse coordinaten zijn met comma. Google gebruikt punt.
+            string userLocationURLString = $"{userLocation.Latitude.ToString().Replace(',', '.')}%2C{userLocation.Longitude.ToString().Replace(',', '.')}";
+            string landmarkLocationURLString = $"{endLocation.Latitude.ToString().Replace(',', '.')}%2C{endLocation.Longitude.ToString().Replace(',', '.')}";
+
+            string requestURL = $"https://maps.googleapis.com/maps/api/directions/json?origin={userLocationURLString}&destination={landmarkLocationURLString}&mode=walking&key={_googleApiKey}";
+
+            var response = _client.GetAsync(requestURL).GetAwaiter().GetResult();
+
+            if (!response.IsSuccessStatusCode)
+            {
+                Debug.WriteLine($"Error: {response.StatusCode} - {response.ReasonPhrase}");
+
+                return [];
+            }
+
+            var jsonResponse = await response.Content.ReadFromJsonAsync<JsonObject>();
+
+            if (jsonResponse!["status"]!.ToString() == "ZERO_RESULTS")
+                throw new ApplicationException("No route possible");
+
+            string encodedPolyline =
+                jsonResponse!["routes"]!.AsArray()
+                [0]!.AsObject()
+                ["overview_polyline"]!.AsObject()
+                ["points"]!.ToString();
+
+            PolylineUtility decoder = new();
+            var coordinates = decoder.Decode(encodedPolyline);
+
+            foreach (var coordinate in coordinates)
+            {
+                locations.Add(new Location(coordinate.Latitude, coordinate.Longitude));
+            }
+
+            return locations;
+        }
 
     }
 }
