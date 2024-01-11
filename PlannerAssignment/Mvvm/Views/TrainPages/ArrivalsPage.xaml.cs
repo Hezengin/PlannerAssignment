@@ -2,6 +2,7 @@ using PlannerAssignment.Database;
 using PlannerAssignment.Mvvm.ViewModels;
 using PlannerAssignment.Mvvm.ViewModels.DetailViewModels;
 using PlannerAssignment.Mvvm.Views.DetailPages;
+using PlannerAssignment.MVVM;
 using PlannerAssignment.Utils;
 using System.Diagnostics;
 using static PlannerAssignment.Mvvm.Models.ArrivalTrainModel;
@@ -65,5 +66,10 @@ public partial class ArrivalsPage : ContentPage
         }
         Debug.WriteLine("Save button finished");
 
+    }
+
+    public async void OnMapButtonClicked(object o, EventArgs e)
+    {
+        await Navigation.PushAsync(new MapPage());
     }
 }
