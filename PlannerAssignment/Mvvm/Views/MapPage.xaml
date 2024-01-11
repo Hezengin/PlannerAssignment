@@ -22,7 +22,7 @@
                 <Label x:Name="DistanceLabel" Margin="10,0,0,0" FontSize="16" FontAttributes="Bold"/>
             </HorizontalStackLayout>
             <HorizontalStackLayout Margin="20">
-                <Label Text="Travel time: " FontSize="16" FontAttributes="Bold"/>
+                <Label Text="Walk duration: " FontSize="16" FontAttributes="Bold"/>
                 <Label x:Name="TravelLabel" Margin="10,0,0,0" FontSize="16" FontAttributes="Bold"/>
             </HorizontalStackLayout>
         </VerticalStackLayout>

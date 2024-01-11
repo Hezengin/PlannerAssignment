@@ -19,7 +19,7 @@ public partial class MapPage : ContentPage
     public MapPage(RequestManager requestManager)
 	{
 		InitializeComponent();
-        MapViewModel viewModel = new MapViewModel(requestManager,map);
+        MapViewModel viewModel = new MapViewModel(requestManager,map, TravelLabel);
         viewModel.InitializeAsync().GetAwaiter().GetResult();
     }
 }

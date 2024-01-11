@@ -3,6 +3,7 @@ using PolylineEncoder.Net.Utility;
 using System.Diagnostics;
 using System.Net.Http.Json;
 using System.Text.Json.Nodes;
+using static Android.Provider.CallLog;
 
 namespace PlannerAssignment.Utils
 {
@@ -14,6 +15,7 @@ namespace PlannerAssignment.Utils
         private static string _googleApiKey = "AIzaSyBXG_XrA3JRTL58osjxd0DbqH563e2t84o";
         private static HttpClient _client = new HttpClient();
         private Station _currentStation;
+        JsonObject? _jsonResponse;
 
         public RequestManager()
         {
@@ -159,33 +161,11 @@ namespace PlannerAssignment.Utils
             }
         }
 
-        public async Task<List<Location>> GetRoutePolylineLocations(Location userLocation)
+        public List<Location> GetRoutePolylineLocations()
         {
-
-            List<Location> locations = new List<Location>();
-
-            //Nederlandse coordinaten zijn met comma. Google gebruikt punt.
-            string userLocationURLString = $"{userLocation.Latitude.ToString().Replace(',', '.')}%2C{userLocation.Longitude.ToString().Replace(',', '.')}";
-            string landmarkLocationURLString = $"{_currentStation.Lat.ToString().Replace(',', '.')}%2C{_currentStation.Lng.ToString().Replace(',', '.')}";
-
-            string requestURL = $"https://maps.googleapis.com/maps/api/directions/json?origin={userLocationURLString}&destination={landmarkLocationURLString}&mode=walking&key={_googleApiKey}";
-
-            var response = _client.GetAsync(requestURL).GetAwaiter().GetResult();
-
-            if (!response.IsSuccessStatusCode)
-            {
-                Debug.WriteLine($"Error: {response.StatusCode} - {response.ReasonPhrase}");
-
-                return [];
-            }
-
-            var jsonResponse = await response.Content.ReadFromJsonAsync<JsonObject>();
-
-            if (jsonResponse!["status"]!.ToString() == "ZERO_RESULTS")
-                throw new ApplicationException("No route possible");
-
+            List<Location> locations = new();
             string encodedPolyline =
-                jsonResponse!["routes"]!.AsArray()
+                _jsonResponse!["routes"]!.AsArray()
                 [0]!.AsObject()
                 ["overview_polyline"]!.AsObject()
                 ["points"]!.ToString();
@@ -199,6 +179,41 @@ namespace PlannerAssignment.Utils
             }
 
             return locations;
+        }
+
+        public string GetRouteWalkDuration()
+        {
+            string walkDuration;
+
+            walkDuration = _jsonResponse!["routes"]!.AsArray()
+                [0]!.AsObject()
+                ["legs"]!.AsArray()
+                [0]!.AsObject()
+                ["duration"]!.AsObject()
+                ["test"]!.ToString();
+
+            return walkDuration;
+        }
+
+        public async Task SendRequestGAPI(Location userLocation)
+        {
+            //Nederlandse coordinaten zijn met comma. Google gebruikt punt.
+            string userLocationURLString = $"{userLocation.Latitude.ToString().Replace(',', '.')}%2C{userLocation.Longitude.ToString().Replace(',', '.')}";
+            string landmarkLocationURLString = $"{_currentStation.Lat.ToString().Replace(',', '.')}%2C{_currentStation.Lng.ToString().Replace(',', '.')}";
+
+            string requestURL = $"https://maps.googleapis.com/maps/api/directions/json?origin={userLocationURLString}&destination={landmarkLocationURLString}&mode=walking&key={_googleApiKey}";
+
+            var response = _client.GetAsync(requestURL).GetAwaiter().GetResult();
+
+            if (!response.IsSuccessStatusCode)
+            {
+                Debug.WriteLine($"Error: {response.StatusCode} - {response.ReasonPhrase}");
+            }
+
+            _jsonResponse = await response.Content.ReadFromJsonAsync<JsonObject>();
+
+            if (_jsonResponse!["status"]!.ToString() == "ZERO_RESULTS")
+                throw new ApplicationException("Invalid JSON");
         }
 
     }

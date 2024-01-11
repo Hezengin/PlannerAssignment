@@ -16,13 +16,15 @@ namespace PlannerAssignment.Mvvm.ViewModels
         private bool notificationSent;
 
         private Map map;
+        private Label travelLabel;
 
-        public MapViewModel(RequestManager requestManager, Map map) : base(requestManager)
+        public MapViewModel(RequestManager requestManager, Map map, Label travelLabel) : base(requestManager)
         {
             _requestManager = requestManager;
             notificationManager = new NotificationManager();
             this.map = map;
             this.notificationSent = false;
+            this.travelLabel = travelLabel;
         }
 
         private async Task StartPollingAsync()
@@ -54,7 +56,10 @@ namespace PlannerAssignment.Mvvm.ViewModels
 
             Polyline polyline = new Polyline();
             polyline.StrokeWidth = 7;
-            List<Location> polylinePoints = await _requestManager.GetRoutePolylineLocations(userLocation);
+
+            await _requestManager.SendRequestGAPI(userLocation);
+
+            List<Location> polylinePoints = _requestManager.GetRoutePolylineLocations();
             foreach (var polylinePoint in polylinePoints)
             {
                 polyline.Geopath.Add(polylinePoint);
@@ -65,6 +70,9 @@ namespace PlannerAssignment.Mvvm.ViewModels
 
             map.IsShowingUser = true;
             map.MoveToRegion(userMapSpan);
+
+            travelLabel.Text = _requestManager.GetRouteWalkDuration();
+
             GetDistanceFromStation();
         }
 
