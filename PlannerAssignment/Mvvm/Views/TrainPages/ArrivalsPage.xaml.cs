@@ -65,7 +65,15 @@ public partial class ArrivalsPage : ContentPage
             Debug.WriteLine($"{currentStation.Namen.Long} is saved to favorites");
         }
         Debug.WriteLine("Save button finished");
+    }
 
+    public async void OnBackButtonClicked(object o, EventArgs e)
+    {
+        await Navigation.PopAsync(true);
+    }
+    public async void OnMapButtonClicked(object o, EventArgs e)
+    {
+        await Navigation.PushAsync(new MapPage());
     }
 
     public async void OnMapButtonClicked(object o, EventArgs e)

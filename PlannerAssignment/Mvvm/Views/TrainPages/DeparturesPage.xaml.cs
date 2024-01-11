@@ -76,4 +76,13 @@ public partial class DeparturesPage : ContentPage
             Debug.WriteLine("Save button Finished");
         }
     }
+
+    public async void OnBackButtonClicked(object o, EventArgs e)
+    {
+        await Navigation.PopAsync(true);
+    }
+    public async void OnMapButtonClicked(object o, EventArgs e)
+    {
+        await Navigation.PushAsync(new MapPage());
+    }
 }
