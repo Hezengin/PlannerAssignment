@@ -75,4 +75,9 @@ public partial class ArrivalsPage : ContentPage
     {
         await Navigation.PushAsync(new MapPage());
     }
+
+    public async void OnMapButtonClicked(object o, EventArgs e)
+    {
+        await Navigation.PushAsync(new MapPage());
+    }
 }
