@@ -5,7 +5,7 @@
              xmlns:local="clr-namespace:PlannerAssignment.Mvvm.Converters"
              Shell.BackgroundColor="LimeGreen"
              Shell.TitleColor="White"
-             Title="List of Arrivals">
+             Shell.NavBarIsVisible="False">
     
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -13,76 +13,99 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <RefreshView IsRefreshing="{Binding IsRefreshing}" Command="{Binding FetchDataCommand}">
-        <Grid Margin="10">
-            <Grid.RowDefinitions>
-                <RowDefinition  Height="*"/>
-                <RowDefinition  Height="Auto"/>
-            </Grid.RowDefinitions>
 
-            <Label x:Name="emptyLabel" Grid.Row="0" Text="No items found. Refresh to show!" FontSize="16" HorizontalOptions="Center" Margin="10" IsVisible="{Binding ArrHasItems, Converter={StaticResource BooleanNegationConverter}}" />
-            <CollectionView Grid.Row="0" x:Name="collectionView" ItemsLayout="VerticalList" IsGrouped="False" SelectionMode="Single" ItemsSource="{Binding Arrivals}">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Frame  Margin="5">
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="collectionView_SelectionChanged" />
-                            </Frame.GestureRecognizers>
-                            <VerticalStackLayout Grid.Column="0" Padding="5" >
-                                <HorizontalStackLayout>
-                                    <Grid>
-                                        <Image x:Name="nsImage" Source="ns_logo.png" WidthRequest="80" HeightRequest="100" ></Image>
-                                    </Grid>
-                                    <VerticalStackLayout Margin="20,0,0,0">
-                                        <HorizontalStackLayout Margin="0,10,0,0">
-                                            <Label Text="Name: " FontSize="Medium" FontAttributes="Bold" VerticalOptions="Center" />
-                                            <Label Text="{Binding name}" FontSize="Medium" VerticalOptions="Center"/>
-                                        </HorizontalStackLayout>
-                                        <HorizontalStackLayout Margin="0,10,0,0">
-                                            <Label Text="Origin: " FontSize="Medium" FontAttributes="Bold" VerticalOptions="Center" />
-                                            <Label Text="{Binding origin}" FontSize="Medium" VerticalOptions="Center"/>
-                                        </HorizontalStackLayout>
-                                        <HorizontalStackLayout Margin="0,10,0,0">
-                                            <Label Text="Status: " FontSize="Medium" FontAttributes="Bold" VerticalOptions="Center"/>
-                                            <Label Text="{Binding status}" FontSize="Medium" VerticalOptions="Center"/>
-                                        </HorizontalStackLayout>
-                                        <HorizontalStackLayout Margin="0,10,0,0">
-                                            <Label Text="Date: " FontSize="Medium" FontAttributes="Bold" VerticalOptions="Center"/>
-                                            <Label Text="{Binding plannedDateTime}" FontSize="Medium" VerticalOptions="Center" />
-                                        </HorizontalStackLayout>
-                                    </VerticalStackLayout>
-                                </HorizontalStackLayout>
-                            </VerticalStackLayout>
-                        </Frame>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-            <StackLayout Grid.Row="1" Margin="10" Orientation="Horizontal" Spacing="10">
-                <Button 
-                    x:Name="DepBtn"
-                    Text="Departures List" 
-                    TextColor="Black"
-                    WidthRequest="150"
-                    Clicked="OnDepBtnClicked"
-                    FontAttributes="Bold"
-                    HorizontalOptions="StartAndExpand"
-                    Background="LimeGreen"/>
-                <Button  Text="♥"
-                    Clicked="OnFavoriteClicked" 
-                    BackgroundColor="LimeGreen"
-                    WidthRequest="50" 
-                    HeightRequest="50" 
-                    CornerRadius="25"/>
-                <Button 
-                    x:Name="ArrBtn"
-                    Text="Arrivals List" 
-                    TextColor="Black"
-                    WidthRequest="150"
-                    Clicked="OnArrBtnClicked"
-                    FontAttributes="Bold"
-                    HorizontalOptions="EndAndExpand"
-                    Background="LimeGreen"/>
-            </StackLayout>
-        </Grid>
-    </RefreshView>
+    <Grid Margin="10, 20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto"/>
+        </Grid.ColumnDefinitions>
+
+        <StackLayout Margin="10" Spacing="10" Orientation="Horizontal" Grid.Row="0" Grid.Column="0">
+            <Button Text="Back" Background="LimeGreen" TextColor="Black" FontAttributes="Bold" HorizontalOptions="StartAndExpand" Clicked="OnBackButtonClicked"></Button>
+            <Label Text="Arrivals" VerticalOptions="Center" HorizontalOptions="Center"/>
+            <Button Text="Map" Background="LimeGreen" TextColor="Black" FontAttributes="Bold" HorizontalOptions="EndAndExpand" Clicked="OnMapButtonClicked"></Button>
+        </StackLayout>
+
+        <RefreshView IsRefreshing="{Binding IsRefreshing}" Command="{Binding FetchDataCommand}" Grid.Row="1" Grid.Column="0">
+            <Grid Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition  Height="*"/>
+                    <RowDefinition  Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Label x:Name="emptyLabel" Grid.Row="0" Text="No items found. Refresh to show!" FontSize="16" HorizontalOptions="Center" Margin="10" IsVisible="{Binding ArrHasItems, Converter={StaticResource BooleanNegationConverter}}" />
+                <CollectionView Grid.Row="0" x:Name="collectionView" ItemsLayout="VerticalList" IsGrouped="False" SelectionMode="Single" ItemsSource="{Binding Arrivals}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame  Margin="5">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="collectionView_SelectionChanged" />
+                                </Frame.GestureRecognizers>
+                                <VerticalStackLayout Grid.Column="0" Padding="5" >
+                                    <HorizontalStackLayout>
+                                        <Grid>
+                                            <Image x:Name="nsImage" Source="ns_logo.png" WidthRequest="80" HeightRequest="100" ></Image>
+                                        </Grid>
+                                        <VerticalStackLayout Margin="20,0,0,0">
+                                            <HorizontalStackLayout Margin="0,10,0,0">
+                                                <Label Text="Name: " FontSize="Medium" FontAttributes="Bold" VerticalOptions="Center" />
+                                                <Label Text="{Binding name}" FontSize="Medium" VerticalOptions="Center"/>
+                                            </HorizontalStackLayout>
+                                            <HorizontalStackLayout Margin="0,10,0,0">
+                                                <Label Text="Origin: " FontSize="Medium" FontAttributes="Bold" VerticalOptions="Center" />
+                                                <Label Text="{Binding origin}" FontSize="Medium" VerticalOptions="Center"/>
+                                            </HorizontalStackLayout>
+                                            <HorizontalStackLayout Margin="0,10,0,0">
+                                                <Label Text="Status: " FontSize="Medium" FontAttributes="Bold" VerticalOptions="Center"/>
+                                                <Label Text="{Binding status}" FontSize="Medium" VerticalOptions="Center"/>
+                                            </HorizontalStackLayout>
+                                            <HorizontalStackLayout Margin="0,10,0,0">
+                                                <Label Text="Date: " FontSize="Medium" FontAttributes="Bold" VerticalOptions="Center"/>
+                                                <Label Text="{Binding plannedDateTime}" FontSize="Medium" VerticalOptions="Center" />
+                                            </HorizontalStackLayout>
+                                        </VerticalStackLayout>
+                                    </HorizontalStackLayout>
+                                </VerticalStackLayout>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Grid>
+        </RefreshView>
+
+        <StackLayout Margin="10" Spacing="10" Orientation="Horizontal" Grid.Row="3" Grid.Column="0">
+            <Button 
+x:Name="DepBtn"
+Text="Departures List" 
+TextColor="Black"
+WidthRequest="150"
+Clicked="OnDepBtnClicked"
+FontAttributes="Bold"
+HorizontalOptions="StartAndExpand"
+Background="LimeGreen"/>
+            <Button  Text="♥"
+Grid.ColumnSpan="1"
+Clicked="OnFavoriteClicked" 
+BackgroundColor="LimeGreen"
+WidthRequest="50" 
+HeightRequest="50" 
+CornerRadius="25" 
+Grid.Row="1" />
+            <Button 
+x:Name="ArrBtn"
+Text="Arrivals List" 
+TextColor="Black"
+WidthRequest="150"
+Clicked="OnArrBtnClicked"
+FontAttributes="Bold"
+HorizontalOptions="EndAndExpand"
+Background="LimeGreen"/>
+        </StackLayout>
+    </Grid>
 </ContentPage>
