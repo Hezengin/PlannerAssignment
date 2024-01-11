@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace PlannerAssignment.Notification
 {
-    internal class INotificationType
+    public interface INotificationType
     {
+        void SendNotification(string text, string description);
+        bool IsPermissionGranted();
     }
 }

@@ -8,22 +8,19 @@
              Title="MapPage">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <StackLayout x:Name="stacklayout" Grid.Row="1">
-            <maps:Map x:Name="map" MapType="Hybrid"/>
+        <StackLayout x:Name="stacklayout" Grid.Row="0">
+            <maps:Map x:Name="map" MapType="Street"/>
         </StackLayout>
 
-        <VerticalStackLayout Grid.Row="2">
+        <VerticalStackLayout Grid.Row="1">
             <HorizontalStackLayout Margin="20">
                 <Label Text="Time of arrival at station:" FontSize="16" FontAttributes="Bold"/>
                 <Label x:Name="DistanceLabel" Margin="10,0,0,0" FontSize="16" FontAttributes="Bold"/>
             </HorizontalStackLayout>
-        </VerticalStackLayout>
-        <VerticalStackLayout Grid.Row="3">
             <HorizontalStackLayout Margin="20">
                 <Label Text="Travel time: " FontSize="16" FontAttributes="Bold"/>
                 <Label x:Name="TravelLabel" Margin="10,0,0,0" FontSize="16" FontAttributes="Bold"/>
