@@ -11,7 +11,7 @@ public partial class StationPage : ContentPage
 {
     DeparturesViewModel trainsListViewModel;
     RequestManager requestManager;
-    private readonly StationDatabase _stationDatabase;
+    private StationDatabase _stationDatabase;
 
     public StationPage(StationViewModel stationViewModel, StationDatabase stationDatabase)
 	{

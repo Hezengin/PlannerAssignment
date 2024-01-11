@@ -11,7 +11,7 @@ namespace PlannerAssignment
     {
         RequestManager requestManager { get; set; }
         StationViewModel stationViewModel { get; set; }
-        private readonly StationDatabase _stationDatabase;
+        private StationDatabase _stationDatabase;
 
         public MainPage()
         {
@@ -76,7 +76,7 @@ namespace PlannerAssignment
 
         private async void OnFavStationBtnClicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new FavoritePage(_stationDatabase));
+            await Navigation.PushAsync(new FavoritePage(_stationDatabase, requestManager));
         }
 
         private void ClearInputs()

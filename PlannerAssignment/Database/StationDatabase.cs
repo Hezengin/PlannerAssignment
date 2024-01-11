@@ -11,7 +11,7 @@ namespace PlannerAssignment.Database
 {
     public class StationDatabase
     {
-        private readonly SQLiteAsyncConnection _connection;
+        private SQLiteAsyncConnection _connection;
 
         public StationDatabase(string dbPath)
         {
@@ -21,7 +21,6 @@ namespace PlannerAssignment.Database
         public async Task InitializeDBAsync()
         {
             await _connection.CreateTableAsync<Names>().ContinueWith((res) => Debug.WriteLine("Created table session"));
-
         }
 
         public async Task<List<Names>> GetAllStationsAsync()

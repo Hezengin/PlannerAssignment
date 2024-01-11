@@ -33,6 +33,7 @@ namespace PlannerAssignment.Utils
         {
             try
             {
+                Debug.WriteLine("_currentStation.UICCode:" + _currentStation.UICCode);
                 string neededUrl = _departureUrl + _currentStation.UICCode;
 
                 _client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", "cfba573a8d014708aa013c32453eca8e");
@@ -81,6 +82,39 @@ namespace PlannerAssignment.Utils
                 else
                 {
                     Application.Current.MainPage.DisplayAlert("Error", "No Trains at the moment", "OK");
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error getting message: {ex}");
+                return null;
+            }
+        }
+
+        public async Task<Station> GetStation(string stationName)
+        {
+            try
+            {
+                string neededUrl = _stationUrl + stationName + "&limit=1";
+
+                _client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", "cfba573a8d014708aa013c32453eca8e");
+
+                HttpResponseMessage response = await _client.GetAsync(neededUrl);
+                response.EnsureSuccessStatusCode();
+
+                string jsonString = await response.Content.ReadAsStringAsync();
+                Station stations = JsonUtil.ParseStation(jsonString);
+
+                Debug.WriteLine("json GetStation: " + jsonString);
+
+                if (stations != null)
+                {
+                    return stations;
+                }
+                else
+                {
+                    Application.Current.MainPage.DisplayAlert("Error", $"{stationName} is not found", "OK");
                     return null;
                 }
             }

@@ -90,7 +90,7 @@ namespace PlannerAssignment.Mvvm.ViewModels
                     ArrHasItems = false;
                 }
                 Debug.WriteLine(ex.ToString());
-                //Application.Current.MainPage.DisplayAlert("Error", ex.Message, "OK");
+                Application.Current.MainPage.DisplayAlert("Error", ex.Message, "OK");
             }
         }
     }

@@ -1,27 +1,63 @@
 using PlannerAssignment.Database;
+using PlannerAssignment.Mvvm.Models;
+using PlannerAssignment.Mvvm.ViewModels;
+using PlannerAssignment.MVVM;
+using PlannerAssignment.Utils;
+using System.Diagnostics;
 namespace PlannerAssignment.Mvvm.Views;
 
 public partial class FavoritePage : ContentPage
 {
-    private readonly StationDatabase _stationDatabase;
+    private StationDatabase _stationDatabase;
+    FavoriteViewModel _favoriteViewModel;
+    RequestManager _requestManager;
 
-    public FavoritePage(StationDatabase stationDatabase)
-	{
-		InitializeComponent();
+    public FavoritePage(StationDatabase stationDatabase, RequestManager requestManager)
+    {
+        InitializeComponent();
+        _requestManager = requestManager;
         _stationDatabase = stationDatabase;
-        BindingContext = _stationDatabase.GetAllStationsAsync();
-	}
+        _favoriteViewModel = new FavoriteViewModel(_requestManager, stationDatabase);
+        BindingContext = _favoriteViewModel;
+    }
+
+    private async Task<List<Names>> LoadDataAsync()
+    {
+        try
+        {
+            List<Names> names = new List<Names>(); 
+            // Use async/await to get the result of the task
+            var vars = await _stationDatabase.GetAllStationsAsync();
+
+            // Print the contents of the list
+            foreach (var name in vars)
+            {
+                Debug.WriteLine($"Name: Long: {name.Long}");
+                names.Add( name );
+            }
+            return names;
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"Error loading data: {ex.Message}");
+        }
+        return null;
+    }
 
     public async void collectionView_SelectionChanged(object o, EventArgs e)
     {
-        //if (o is Frame frame && frame.BindingContext is Station selectedStation)
-        //{
-        //    Debug.WriteLine($"Selected Station: {selectedStation.Namen.Long}");
-        //    collectionView.SelectedItem = selectedStation;
-        //    requestManager.SetCurrentStation(selectedStation);
+        if (o is Frame frame && frame.BindingContext is Names selectedStation)
+        {
+            Debug.WriteLine($"Selected Station: {selectedStation.Long}");
+            collectionView.SelectedItem = selectedStation;
+            Station station = await _requestManager.GetStation(selectedStation.Long);
+            _requestManager.SetCurrentStation(station);
+            Debug.WriteLine("station.UICCode: " + station.UICCode);
+            Debug.WriteLine("station: " + station);
 
-        //    await Navigation.PushAsync(new DeparturesPage(trainsListViewModel, requestManager, _stationDatabase));
-        //    collectionView.SelectedItem = null;
-        //}
+            DeparturesViewModel trainsListViewModel = new DeparturesViewModel(_requestManager);
+            await Navigation.PushAsync(new DeparturesPage(trainsListViewModel, _requestManager, _stationDatabase));
+            collectionView.SelectedItem = null;
+        }
     }
 }

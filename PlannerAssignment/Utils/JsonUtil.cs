@@ -48,5 +48,19 @@ namespace PlannerAssignment.Utils
                 return null;
             }
         }
+
+        public static Station ParseStation(string jsonString)
+        {
+            try
+            {
+                var stationModel = JsonConvert.DeserializeObject<Station>(jsonString);
+                return stationModel;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error parsing JSON: {ex.Message}");
+                return null;
+            }
+        }
     }
 }

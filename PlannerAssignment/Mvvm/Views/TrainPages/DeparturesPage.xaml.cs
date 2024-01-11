@@ -1,13 +1,12 @@
 using PlannerAssignment.Database;
+using PlannerAssignment.Mvvm.Models;
 using PlannerAssignment.Mvvm.ViewModels;
 using PlannerAssignment.Mvvm.ViewModels.DetailViewModels;
 using PlannerAssignment.Mvvm.Views;
 using PlannerAssignment.Mvvm.Views.DetailPages;
-using PlannerAssignment.Mvvm.Models;
 using PlannerAssignment.Utils;
 using System.Diagnostics;
 using static PlannerAssignment.Mvvm.Models.DepartureTrainModel;
-using System.ComponentModel.Design;
 
 
 namespace PlannerAssignment.MVVM;
@@ -17,7 +16,7 @@ public partial class DeparturesPage : ContentPage
     RequestManager _requestManager;
     DeparturesViewModel _departuresViewModel;
     ArrivalsViewModel _arrivalsViewModel;
-    private readonly StationDatabase _stationDatabase;
+    private StationDatabase _stationDatabase;
 
     public DeparturesPage(DeparturesViewModel trainsViewModel, RequestManager requestManager, StationDatabase stationDatabase)
 	{

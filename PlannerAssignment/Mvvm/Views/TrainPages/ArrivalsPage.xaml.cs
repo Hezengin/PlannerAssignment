@@ -12,7 +12,7 @@ public partial class ArrivalsPage : ContentPage
 {
     RequestManager _requestManager;
     ArrivalsViewModel _arrivalsViewModel;
-    private readonly StationDatabase _stationDatabase;
+    private StationDatabase _stationDatabase;
 
     public ArrivalsPage(ArrivalsViewModel arrivalsViewModel, RequestManager requestManager, StationDatabase stationDatabase)
 	{
