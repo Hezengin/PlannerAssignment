@@ -14,14 +14,13 @@ public partial class MapPage : ContentPage
 	{
 		InitializeComponent();
 		_requestManager = requestManager;
-
+		Debug.WriteLine(_requestManager);
 		GetUserLocation();
 		MapSpan userMapSpan = new MapSpan(userLocation, 0.1, 0.1);
-		Location e = new Location(51.5955543518066, 4.78000020980835);
 
 		Polyline polyline = new Polyline();
 		polyline.StrokeWidth = 7;
-        List<Location> polylinePoints = _requestManager.GetRoutePolylineLocations(userLocation, e).GetAwaiter().GetResult();
+        List<Location> polylinePoints = _requestManager.GetRoutePolylineLocations(userLocation).GetAwaiter().GetResult();
         
         foreach (var polylinePoint in polylinePoints)
         {
@@ -44,7 +43,4 @@ public partial class MapPage : ContentPage
 			Debug.WriteLine("Unable to get user location");
 		}
     }
-
-
-
 }

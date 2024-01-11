@@ -159,14 +159,14 @@ namespace PlannerAssignment.Utils
             }
         }
 
-        public async Task<List<Location>> GetRoutePolylineLocations(Location userLocation, Location endLocation)
+        public async Task<List<Location>> GetRoutePolylineLocations(Location userLocation)
         {
 
             List<Location> locations = new List<Location>();
 
             //Nederlandse coordinaten zijn met comma. Google gebruikt punt.
             string userLocationURLString = $"{userLocation.Latitude.ToString().Replace(',', '.')}%2C{userLocation.Longitude.ToString().Replace(',', '.')}";
-            string landmarkLocationURLString = $"{endLocation.Latitude.ToString().Replace(',', '.')}%2C{endLocation.Longitude.ToString().Replace(',', '.')}";
+            string landmarkLocationURLString = $"{_currentStation.Lat.ToString().Replace(',', '.')}%2C{_currentStation.Lng.ToString().Replace(',', '.')}";
 
             string requestURL = $"https://maps.googleapis.com/maps/api/directions/json?origin={userLocationURLString}&destination={landmarkLocationURLString}&mode=walking&key={_googleApiKey}";
 

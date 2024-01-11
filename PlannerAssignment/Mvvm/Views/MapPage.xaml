@@ -6,8 +6,22 @@
              Shell.BackgroundColor="LimeGreen"
              Shell.TitleColor="White"
              Title="MapPage">
-    <VerticalStackLayout>
-        <maps:Map x:Name="map" MapType="Street" VerticalOptions="FillAndExpand" Margin="0,10">
-        </maps:Map>
-    </VerticalStackLayout>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <StackLayout x:Name="stacklayout" Grid.Row="1">
+            <maps:Map x:Name="map" MapType="Street"/>
+        </StackLayout>
+
+        <VerticalStackLayout Grid.Row="2">
+            <HorizontalStackLayout Margin="20">
+                <Label Text="Time Of Arrival at Station:" FontSize="16" FontAttributes="Bold"/>
+                <Label x:Name="DistanceLabel" Margin="10,0,0,0" FontSize="16" FontAttributes="Bold"/>
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </Grid>
 </ContentPage>

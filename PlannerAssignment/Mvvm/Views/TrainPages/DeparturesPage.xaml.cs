@@ -84,5 +84,6 @@ public partial class DeparturesPage : ContentPage
     public async void OnMapButtonClicked(object o, EventArgs e)
     {
         await Navigation.PushAsync(new MapPage(_requestManager));
+        
     }
 }
