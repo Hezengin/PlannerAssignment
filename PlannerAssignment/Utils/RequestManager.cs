@@ -163,6 +163,7 @@ namespace PlannerAssignment.Utils
 
         public List<Location> GetRoutePolylineLocations()
         {
+            Debug.WriteLine(_jsonResponse.ToJsonString());
             List<Location> locations = [];
             string encodedPolyline =
                 _jsonResponse!["routes"]!.AsArray()
@@ -184,13 +185,13 @@ namespace PlannerAssignment.Utils
         public string GetRouteWalkDuration()
         {
             string walkDuration = "";
-
+            
             walkDuration = _jsonResponse!["routes"]!.AsArray()
                 [0]!.AsObject()
                 ["legs"]!.AsArray()
                 [0]!.AsObject()
                 ["duration"]!.AsObject()
-                ["test"]!.ToString();
+                ["text"]!.ToString();
 
             return walkDuration;
         }
@@ -216,6 +217,7 @@ namespace PlannerAssignment.Utils
 
             if (_jsonResponse!["status"]!.ToString() == "ZERO_RESULTS")
                throw new ApplicationException("Invalid JSON");
+
         }
 
     }
