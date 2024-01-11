@@ -15,7 +15,7 @@
             <Label Text="Give current location and the station of arrival below: " FontSize="Medium" FontAttributes="Bold" VerticalOptions="Center" />
 
             <HorizontalStackLayout Margin="0,10,0,0">
-                <Label Text="Current Location: " FontSize="Medium" FontAttributes="Bold" VerticalOptions="Center"  />
+                <Label Text="Start Location: " FontSize="Medium" FontAttributes="Bold" VerticalOptions="Center"  />
                 <Editor  x:Name="locationEditor" FontSize="Medium" VerticalOptions="Center" WidthRequest="200" />
             </HorizontalStackLayout>
 
@@ -29,16 +29,25 @@
                 <Editor x:Name="stationEditor" FontSize="Medium" VerticalOptions="Center" WidthRequest="200"/>
             </HorizontalStackLayout>
         </VerticalStackLayout>
-
-        <Button Grid.Row="1" VerticalOptions="Start" 
-             x:Name="SearchBtn"
-             Text="Search for possible trains" 
-             TextColor="Black"
-             Clicked="OnSearchClicked"
-             BackgroundColor="LimeGreen"
-             FontAttributes="Bold"
-             Margin="20"
-             HorizontalOptions="Fill" />
+        <StackLayout Grid.Row="1" Margin="10" Orientation="Horizontal" Spacing="10">
+            <Button Grid.Row="1" VerticalOptions="Start" 
+                 x:Name="SearchBtn"
+                 Text="Search for trains" 
+                 TextColor="Black"
+                 Clicked="OnSearchClicked"
+                 BackgroundColor="LimeGreen"
+                 FontAttributes="Bold"
+                 HorizontalOptions="Start" />
+            <BoxView HorizontalOptions="FillAndExpand" BackgroundColor="White" VerticalOptions="FillAndExpand"/>
+            <Button 
+                x:Name="FavStationBtn"
+                Text="Favorite Stations" 
+                TextColor="Black"
+                Clicked="OnFavStationBtnClicked"
+                FontAttributes="Bold"
+                BackgroundColor="LimeGreen"
+                HorizontalOptions="End"/>
+        </StackLayout>
     </Grid>
 
 </ContentPage>

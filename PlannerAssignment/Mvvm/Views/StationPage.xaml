@@ -20,21 +20,21 @@
             <CollectionView x:Name="collectionView" ItemsLayout="VerticalList" IsGrouped="False" SelectionMode="Single" ItemsSource="{Binding Stations}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Frame  Margin="10">
+                        <Frame  Margin="5">
                             <Frame.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="collectionView_SelectionChanged" />
                             </Frame.GestureRecognizers>
-                            <VerticalStackLayout Grid.Column="0" Padding="5" >
+                            <VerticalStackLayout Padding="5" >
                                 <HorizontalStackLayout>
                                     <Grid>
-                                        <Image x:Name="nsImage" Source="ns_logo.png" WidthRequest="80" HeightRequest="100" ></Image>
+                                        <Image x:Name="nsImage" Source="ns_logo.png" WidthRequest="70" HeightRequest="70" ></Image>
                                     </Grid>
                                     <VerticalStackLayout Margin="30,0,0,0">
-                                        <HorizontalStackLayout>
+                                        <HorizontalStackLayout Margin="10" >
                                             <Label Text="Name: " FontSize="Medium" FontAttributes="Bold" VerticalOptions="Center" />
-                                            <Label Text="{Binding Namen.Long}" FontSize="Medium" VerticalOptions="Center" />
+                                            <Label Text="{Binding Namen.Mid}" FontSize="Medium" VerticalOptions="Center" />
                                         </HorizontalStackLayout>
-                                        <HorizontalStackLayout Margin="0,10,0,0">
+                                        <HorizontalStackLayout Margin="10">
                                             <Label Text="Type: " FontSize="Medium" FontAttributes="Bold" VerticalOptions="Center"/>
                                             <Label Text="{Binding StationType}" FontSize="Small" VerticalOptions="Center" />
                                         </HorizontalStackLayout>

@@ -23,7 +23,7 @@
             <CollectionView Grid.Row="0" x:Name="collectionView" ItemsLayout="VerticalList" IsGrouped="False" SelectionMode="Single" ItemsSource="{Binding Departures}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Frame  Margin="10">
+                        <Frame  Margin="5">
                             <Frame.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="collectionView_SelectionChanged" />
                             </Frame.GestureRecognizers>
@@ -66,6 +66,14 @@
                     FontAttributes="Bold"
                     HorizontalOptions="StartAndExpand"
                     Background="LimeGreen"/>
+                <Button  Text="♥"
+                    Grid.ColumnSpan="1"
+                    Clicked="OnFavoriteClicked" 
+                    BackgroundColor="LimeGreen"
+                    WidthRequest="50" 
+                    HeightRequest="50" 
+                    CornerRadius="25" 
+                    Grid.Row="1" />
                 <Button 
                     x:Name="ArrBtn"
                     Text="Arrivals List" 

@@ -93,9 +93,6 @@
 	  <MauiXaml Update="Mvvm\Views\DetailPages\ArrivalsDetail.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Mvvm\Views\FavoritePage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
 	  <MauiXaml Update="Mvvm\Views\TrainPages\ArrivalsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

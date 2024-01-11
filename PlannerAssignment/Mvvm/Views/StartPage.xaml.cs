@@ -2,6 +2,7 @@
 using PlannerAssignment.Mvvm.Views;
 using PlannerAssignment.MVVM;
 using PlannerAssignment.Utils;
+using PlannerAssignment.Database;
 using System.Diagnostics;
 
 namespace PlannerAssignment
@@ -10,11 +11,26 @@ namespace PlannerAssignment
     {
         RequestManager requestManager { get; set; }
         StationViewModel stationViewModel { get; set; }
+        private readonly StationDatabase _stationDatabase;
 
         public MainPage()
         {
             InitializeComponent();
             requestManager = new RequestManager();
+
+            var dbPath = Path.Combine(FileSystem.AppDataDirectory, "StationsDatabase.db3");
+
+            try
+            {
+                _stationDatabase = new StationDatabase(dbPath);
+            }
+            catch (AggregateException ex)
+            {
+                foreach (var innerEx in ex.InnerExceptions)
+                {
+                    Console.WriteLine($"Error: {innerEx.Message}");
+                }
+            }
         }
 
         private void OnSearchClicked(object sender, EventArgs e)
@@ -39,7 +55,7 @@ namespace PlannerAssignment
             ClearInputs();
 
             stationViewModel = new StationViewModel(requestManager, stationText);
-            Navigation.PushAsync(new StationPage(stationViewModel));
+            Navigation.PushAsync(new StationPage(stationViewModel,_stationDatabase));
         }
 
         private void OnLocationSwitchToggled(object sender, ToggledEventArgs e)
@@ -56,6 +72,11 @@ namespace PlannerAssignment
                 locationEditor.IsEnabled = true;
                 locationSwitch.IsToggled = false;
             }
+        }
+
+        private async void OnFavStationBtnClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new FavoritePage(_stationDatabase));
         }
 
         private void ClearInputs()

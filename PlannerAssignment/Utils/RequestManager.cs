@@ -24,6 +24,10 @@ namespace PlannerAssignment.Utils
         {
             _currentStation = station;
         }
+        public Station GetCurrentStation()
+        {
+            return _currentStation;
+    }
 
         public async Task<DepartureTrainModel> GetDeparturingTrainsListAsync()
         {

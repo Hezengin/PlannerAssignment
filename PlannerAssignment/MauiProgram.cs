@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
+using PlannerAssignment.Database;
 
 namespace PlannerAssignment
 {
@@ -17,6 +18,8 @@ namespace PlannerAssignment
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 })
                 .UseMauiMaps();
+
+            builder.Services.AddSingleton<StationDatabase>();
 
 
 #if DEBUG
