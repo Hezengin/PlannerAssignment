@@ -15,7 +15,7 @@ namespace PlannerAssignment.Utils
         private static string _googleApiKey = "AIzaSyBXG_XrA3JRTL58osjxd0DbqH563e2t84o";
         private static HttpClient _client = new HttpClient();
         private Station _currentStation;
-        JsonObject? _jsonResponse;
+        JsonObject _jsonResponse;
 
         public RequestManager()
         {
@@ -210,10 +210,12 @@ namespace PlannerAssignment.Utils
                 Debug.WriteLine($"Error: {response.StatusCode} - {response.ReasonPhrase}");
             }
 
-            _jsonResponse = await response.Content.ReadFromJsonAsync<JsonObject>();
+            var jsonResponse = await response.Content.ReadFromJsonAsync<JsonObject>();
 
-            if (_jsonResponse!["status"]!.ToString() == "ZERO_RESULTS")
-                throw new ApplicationException("Invalid JSON");
+            _jsonResponse = jsonResponse;
+
+            //if (jsonResponse!["status"]!.ToString() == "ZERO_RESULTS")
+            //    throw new ApplicationException("Invalid JSON");
         }
 
     }
