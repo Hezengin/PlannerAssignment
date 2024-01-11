@@ -41,7 +41,7 @@ namespace PlannerAssignment.Mvvm.ViewModels
 
             Arrivals = new ObservableCollection<ArrivalTrain>();
 
-            //StartPollingAsync();
+            StartPollingAsync();
         }
 
         private async Task StartPollingAsync()

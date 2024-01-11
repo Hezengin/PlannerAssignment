@@ -19,8 +19,14 @@
 
         <VerticalStackLayout Grid.Row="2">
             <HorizontalStackLayout Margin="20">
-                <Label Text="Time Of Arrival at Station:" FontSize="16" FontAttributes="Bold"/>
+                <Label Text="Time of arrival at station:" FontSize="16" FontAttributes="Bold"/>
                 <Label x:Name="DistanceLabel" Margin="10,0,0,0" FontSize="16" FontAttributes="Bold"/>
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+        <VerticalStackLayout Grid.Row="3">
+            <HorizontalStackLayout Margin="20">
+                <Label Text="Travel time: " FontSize="16" FontAttributes="Bold"/>
+                <Label x:Name="TravelLabel" Margin="10,0,0,0" FontSize="16" FontAttributes="Bold"/>
             </HorizontalStackLayout>
         </VerticalStackLayout>
     </Grid>
