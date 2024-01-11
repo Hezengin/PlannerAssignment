@@ -15,7 +15,7 @@ namespace PlannerAssignment.Utils
         private static string _googleApiKey = "AIzaSyBXG_XrA3JRTL58osjxd0DbqH563e2t84o";
         private static HttpClient _client = new HttpClient();
         private Station _currentStation;
-        JsonObject _jsonResponse;
+        JsonObject? _jsonResponse;
 
         public RequestManager()
         {
@@ -163,7 +163,7 @@ namespace PlannerAssignment.Utils
 
         public List<Location> GetRoutePolylineLocations()
         {
-            List<Location> locations = new();
+            List<Location> locations = [];
             string encodedPolyline =
                 _jsonResponse!["routes"]!.AsArray()
                 [0]!.AsObject()
@@ -183,7 +183,7 @@ namespace PlannerAssignment.Utils
 
         public string GetRouteWalkDuration()
         {
-            string walkDuration;
+            string walkDuration = "";
 
             walkDuration = _jsonResponse!["routes"]!.AsArray()
                 [0]!.AsObject()
@@ -210,12 +210,12 @@ namespace PlannerAssignment.Utils
                 Debug.WriteLine($"Error: {response.StatusCode} - {response.ReasonPhrase}");
             }
 
-            var jsonResponse = await response.Content.ReadFromJsonAsync<JsonObject>();
+            
+            _jsonResponse = await response.Content.ReadFromJsonAsync<JsonObject>();
 
-            _jsonResponse = jsonResponse;
 
-            //if (jsonResponse!["status"]!.ToString() == "ZERO_RESULTS")
-            //    throw new ApplicationException("Invalid JSON");
+            if (_jsonResponse!["status"]!.ToString() == "ZERO_RESULTS")
+               throw new ApplicationException("Invalid JSON");
         }
 
     }
