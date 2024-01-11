@@ -14,7 +14,7 @@
         </Grid.RowDefinitions>
 
         <StackLayout x:Name="stacklayout" Grid.Row="1">
-            <maps:Map x:Name="map" MapType="Street"/>
+            <maps:Map x:Name="map" MapType="Hybrid"/>
         </StackLayout>
 
         <VerticalStackLayout Grid.Row="2">

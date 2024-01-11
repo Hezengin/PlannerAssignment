@@ -21,7 +21,6 @@ public partial class MapPage : ContentPage
 		Polyline polyline = new Polyline();
 		polyline.StrokeWidth = 7;
         List<Location> polylinePoints = _requestManager.GetRoutePolylineLocations(userLocation).GetAwaiter().GetResult();
-        
         foreach (var polylinePoint in polylinePoints)
         {
             polyline.Geopath.Add(polylinePoint);
