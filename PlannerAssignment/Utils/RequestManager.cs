@@ -3,7 +3,6 @@ using PolylineEncoder.Net.Utility;
 using System.Diagnostics;
 using System.Net.Http.Json;
 using System.Text.Json.Nodes;
-using static Android.Provider.CallLog;
 
 namespace PlannerAssignment.Utils
 {
@@ -219,6 +218,12 @@ namespace PlannerAssignment.Utils
                throw new ApplicationException("Invalid JSON");
 
         }
+        public JsonObject GetJsonResponse()
+        {
+            return _jsonResponse;
+        }
 
     }
+
+    
 }
