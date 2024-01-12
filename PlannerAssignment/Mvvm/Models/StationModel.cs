@@ -14,6 +14,9 @@ namespace PlannerAssignment.Mvvm.Models
     [Table("names")]
     public class Names
     {
+        [PrimaryKey, AutoIncrement]
+        public int Id { get; set; }
+
         [Column("name")]
         [JsonProperty("lang")]
         public string Long { get; set; }
@@ -21,7 +24,7 @@ namespace PlannerAssignment.Mvvm.Models
         [Ignore]
         [JsonProperty("middel")]
         public string Mid { get; set; }
-        
+
         [Ignore]
         [JsonProperty("kort")]
         public string Short { get; set; }
@@ -36,6 +39,7 @@ namespace PlannerAssignment.Mvvm.Models
         public string Type { get; set; }
     }
 
+    [Serializable]
     public class Station
     {
         [JsonProperty("UICCode")]

@@ -1,3 +1,4 @@
+using CommunityToolkit.Maui.Alerts;
 using PlannerAssignment.Database;
 using PlannerAssignment.Mvvm.Models;
 using PlannerAssignment.Mvvm.ViewModels;
@@ -67,9 +68,12 @@ public partial class DeparturesPage : ContentPage
             {
                 await _stationDatabase.SaveStationNameAsync(currentStation);
                 Debug.WriteLine($"{currentStation.Namen.Long} is saved to favorites");
+                Toast.Make($"{currentStation.Namen.Long} is saved to favorites");
             }
             else
             {
+                await _stationDatabase.DeleteStationAsync(currentStation.Namen);
+                Toast.Make($"{currentStation.Namen.Long} is not saved to favorites");
                 Debug.WriteLine($"{currentStation.Namen.Long} is not saved to favorites");
                 Debug.WriteLine($"Current Station: {existingStation.Long}");
             }

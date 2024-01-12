@@ -53,8 +53,21 @@ namespace PlannerAssignment.Utils
         {
             try
             {
-                var stationModel = JsonConvert.DeserializeObject<Station>(jsonString);
-                return stationModel;
+                // Parse the JSON string into a StationModel object
+                StationModel stationModel = JsonConvert.DeserializeObject<StationModel>(jsonString);
+                if (stationModel == null || stationModel.Stations == null || stationModel.Stations.Count == 0)
+                {
+                    Debug.WriteLine($"StationModel = {stationModel}");
+                    return null;
+                }
+                else
+                {
+                    // Select the first Station object from the Stations list
+                    Station station = stationModel.Stations[0];
+
+                    Debug.WriteLine("Parsed Station: " + $"UICCode: {station.UICCode}, StationType: {station.StationType}, Lat: {station.Lat}, Lng: {station.Lng}");
+                    return station;
+                }
             }
             catch (Exception ex)
             {

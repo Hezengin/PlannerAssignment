@@ -25,6 +25,7 @@ namespace PlannerAssignment.Mvvm.ViewModels
             this.map = map;
             this.notificationSent = false;
             this.travelLabel = travelLabel;
+            StartPollingAsync();// is needed so the map updates the user position to get notification
         }
 
         private async Task StartPollingAsync()
@@ -34,7 +35,7 @@ namespace PlannerAssignment.Mvvm.ViewModels
                 while (true)
                 {
                     await GetDistanceFromStation();
-                    await Task.Delay(5000);
+                    await Task.Delay(1000);
                 }
             });
         }
@@ -77,9 +78,9 @@ namespace PlannerAssignment.Mvvm.ViewModels
         }
 
 
-        protected override Task FetchDataInternal()
+        protected override async Task FetchDataInternal()
         {
-            throw new NotImplementedException();
+            await StartPollingAsync();
         }
 
         public async Task<Location> GetUserLocation()
@@ -101,18 +102,22 @@ namespace PlannerAssignment.Mvvm.ViewModels
         {
             try
             {
+                Debug.WriteLine(notificationSent);
+
                 Location location = new Location();
                 GeolocationRequest request = new GeolocationRequest(GeolocationAccuracy.Best, TimeSpan.FromSeconds(10));
                 location = await Geolocation.Default.GetLocationAsync(request);
                 if (!notificationSent && Location.CalculateDistance(location, stationLocation, DistanceUnits.Kilometers) < 0.05)
                 {
+                    Debug.WriteLine("value " + notificationManager);
                     notificationManager.SendNotification("", "Approaching station!");
                     notificationSent = true;
+                    Debug.WriteLine("should be true" + notificationSent);
                 }
                 else if (notificationSent && Location.CalculateDistance(location, stationLocation, DistanceUnits.Kilometers) >= 0.05)
                 {
-                    // Reset the flag if the user moves away from the station
                     notificationSent = false;
+                    Debug.WriteLine("should be false" + notificationSent);
                 }
             }
             catch (Exception e)

@@ -103,15 +103,18 @@ namespace PlannerAssignment.Utils
 
                 HttpResponseMessage response = await _client.GetAsync(neededUrl);
                 response.EnsureSuccessStatusCode();
+                Debug.WriteLine("Response was: " + response.EnsureSuccessStatusCode());
 
                 string jsonString = await response.Content.ReadAsStringAsync();
-                Station stations = JsonUtil.ParseStation(jsonString);
+                Station station = JsonUtil.ParseStation(jsonString);
 
                 Debug.WriteLine("json GetStation: " + jsonString);
+                Debug.WriteLine("Parsed Station from method: " + $"UICCode: {station.UICCode}, StationType: {station.StationType}, Lat: {station.Lat}, Lng: {station.Lng}");
 
-                if (stations != null)
+
+                if (station != null)
                 {
-                    return stations;
+                    return station;
                 }
                 else
                 {
@@ -138,7 +141,7 @@ namespace PlannerAssignment.Utils
                 response.EnsureSuccessStatusCode();
 
                 string jsonString = await response.Content.ReadAsStringAsync();
-                StationModel stations = JsonUtil.ParseStationList(jsonString);// this is my object that contains the list the list is basically a jsonarray with stations inside of it.
+                StationModel stations = JsonUtil.ParseStationList(jsonString);
 
                 Debug.WriteLine("json: " + jsonString);
 

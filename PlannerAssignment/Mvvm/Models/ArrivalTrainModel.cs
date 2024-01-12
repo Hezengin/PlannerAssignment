@@ -13,7 +13,6 @@ namespace PlannerAssignment.Mvvm.Models
         [JsonProperty("meta")]
         public Meta meta { get; set; }
 
-
         public class ArrivalTrain
         {
             [JsonProperty("origin")]

@@ -80,7 +80,7 @@ namespace PlannerAssignment.Mvvm.ViewModels
                         Stations.Clear();
                         foreach (var station in stationsData)
                         {
-                            Stations.Add(station);// i cannot add it here ?
+                            Stations.Add(station);
                             Debug.WriteLine(station.Long + " is added to the list");
                         }
                     }

@@ -26,10 +26,8 @@ public partial class FavoritePage : ContentPage
         try
         {
             List<Names> names = new List<Names>(); 
-            // Use async/await to get the result of the task
             var vars = await _stationDatabase.GetAllStationsAsync();
 
-            // Print the contents of the list
             foreach (var name in vars)
             {
                 Debug.WriteLine($"Name: Long: {name.Long}");
