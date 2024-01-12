@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using PlannerAssignment.Mvvm.Models;
 using System.Diagnostics;
+using static System.Collections.Specialized.BitVector32;
 
 namespace PlannerAssignment.Utils
 {
@@ -12,12 +13,20 @@ namespace PlannerAssignment.Utils
             try
             {
                 var trains = JsonConvert.DeserializeObject<ArrivalTrainModel>(jsonString);
-                return trains;
+                if (trains == null || trains.payload == null || trains.payload.arrivals.Count == 0)
+                {
+                    Debug.WriteLine($"Invalid TrainsModel: {trains}");
+                    throw new JsonSerializationException();
+                }
+                else
+                {
+                    return trains;
+                }
             }
-            catch (Exception ex)
+            catch (JsonSerializationException ex)
             {
-                Debug.WriteLine($"Error parsing JSON: {ex.Message}");
-                return null;
+                Debug.WriteLine($"Error parsing JSON for ArrivalTrainModel: {ex.Message}. Stack Trace: {ex.StackTrace}");
+                throw; // Re-throw the exception to allow it to be handled higher up the call stack
             }
         }
 
@@ -26,12 +35,20 @@ namespace PlannerAssignment.Utils
             try
             {
                 var trains = JsonConvert.DeserializeObject<DepartureTrainModel>(jsonString);
-                return trains;
+                if (trains == null || trains.payload == null || trains.payload.departures.Count == 0)
+                {
+                    Debug.WriteLine($"Invalid TrainsModel: {trains}");
+                    throw new JsonSerializationException();
+                }
+                else
+                {
+                    return trains;
+                }
             }
-            catch (Exception ex)
+            catch (JsonSerializationException ex)
             {
-                Debug.WriteLine($"Error parsing JSON: {ex.Message}");
-                return null;
+                Debug.WriteLine($"Error parsing JSON for DepartureTrainModel: {ex.Message}");
+                throw;
             }
         }
 
@@ -40,12 +57,20 @@ namespace PlannerAssignment.Utils
             try
             {
                 var stationModel = JsonConvert.DeserializeObject<StationModel>(jsonString);
-                return stationModel;
+                if (stationModel == null || stationModel.Stations == null || stationModel.Stations.Count == 0)
+                {
+                    Debug.WriteLine($"Invalid StationModel: {stationModel}");
+                    throw new JsonSerializationException();
+                }
+                else
+                {
+                    return stationModel;
+                }
             }
-            catch (Exception ex)
+            catch (JsonSerializationException ex)
             {
-                Debug.WriteLine($"Error parsing JSON: {ex.Message}");
-                return null;
+                Debug.WriteLine($"Error parsing JSON for StationModel: {ex.Message}");
+                throw;
             }
         }
 
@@ -57,22 +82,22 @@ namespace PlannerAssignment.Utils
                 StationModel stationModel = JsonConvert.DeserializeObject<StationModel>(jsonString);
                 if (stationModel == null || stationModel.Stations == null || stationModel.Stations.Count == 0)
                 {
-                    Debug.WriteLine($"StationModel = {stationModel}");
-                    return null;
+                    Debug.WriteLine($"Invalid StationModel: {stationModel}");
+                    throw new JsonSerializationException();
                 }
                 else
                 {
                     // Select the first Station object from the Stations list
                     Station station = stationModel.Stations[0];
 
-                    Debug.WriteLine("Parsed Station: " + $"UICCode: {station.UICCode}, StationType: {station.StationType}, Lat: {station.Lat}, Lng: {station.Lng}");
+                    Debug.WriteLine($"Parsed Station: UICCode: {station.UICCode}, StationType: {station.StationType}, Lat: {station.Lat}, Lng: {station.Lng}");
                     return station;
                 }
             }
-            catch (Exception ex)
+            catch (JsonSerializationException ex)
             {
-                Debug.WriteLine($"Error parsing JSON: {ex.Message}");
-                return null;
+                Debug.WriteLine($"Error parsing JSON for StationModel: {ex.Message}");
+                throw;
             }
         }
     }

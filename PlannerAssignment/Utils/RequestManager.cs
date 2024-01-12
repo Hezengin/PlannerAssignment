@@ -44,6 +44,7 @@ namespace PlannerAssignment.Utils
 
                 string jsonString = await response.Content.ReadAsStringAsync();
                 DepartureTrainModel trains = JsonUtil.ParseDeparturingTrainListJson(jsonString);
+                Debug.WriteLine("jsonDepartures: " + jsonString);
 
                 if (trains != null && trains.payload != null && trains.payload.departures.Count > 0)
                 {
@@ -75,6 +76,7 @@ namespace PlannerAssignment.Utils
 
                 string jsonString = await response.Content.ReadAsStringAsync();
                 ArrivalTrainModel trains = JsonUtil.ParseArrivingTrainListJson(jsonString);
+                Debug.WriteLine("jsonArrival: " + jsonString);
 
                 if (trains != null && trains.payload != null && trains.payload.arrivals.Count > 0)
                 {
@@ -147,7 +149,6 @@ namespace PlannerAssignment.Utils
 
                 if (stations != null && stations.Stations != null && stations.Stations.Count > 0)
                 {
-                    
                     return stations;
                 }
                 else

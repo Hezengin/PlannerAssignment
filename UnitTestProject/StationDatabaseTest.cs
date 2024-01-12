@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace UnitTestProject.Happy
 {
-    public class StatioDatabaseTest
+    public class StationDatabaseTest
     {
         [Fact]
         public async void StationDatabaseAddTest()
