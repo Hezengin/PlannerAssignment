@@ -22,12 +22,3 @@ Clone the repository to your local machine.
 Open the project in Visual Studio or your preferred IDE.
 Build and deploy the application to your mobile device or emulator.
 Explore the features, customize your preferences, and revolutionize your daily commute!
-Contributions and Feedback:
-We welcome contributions from developers of all levels! Whether you're a seasoned professional or just starting your journey, your insights and enhancements can help shape the future of our project. Feel free to submit pull requests, report issues, or provide feedback to help us continually improve and refine the user experience.
-
-Connect with Us:
-For updates, announcements, and discussions, follow us on GitHub and join our community of passionate developers committed to transforming the way we travel.
-
-[Include your GitHub link here]
-
-Thank you for considering [Your Project Name] – where innovation meets convenience in the world of travel planning. We look forward to embarking on this journey with you!
